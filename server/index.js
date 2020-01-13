@@ -19,6 +19,29 @@ app.get('/api/health-check', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products', (req, res, next) => {
+  const sql = `
+    select *
+    from "products"`;
+  db.query(sql)
+    .then(result => {
+      if (!result) {
+        res.status(404).json({
+          error: 'Cannot find products'
+        });
+        return;
+      }
+      const products = result.rows;
+      res.status(200).json(products);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occured.'
+      });
+    });
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
