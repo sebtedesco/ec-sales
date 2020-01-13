@@ -20,7 +20,13 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <Header />
+      <div className="container">
+        <div className="row">
+          <div className="col">
+            <Header />
+          </div>
+        </div>
+      </div>
     );
   }
 }
