@@ -29,12 +29,6 @@ app.get('/api/products', (req, res, next) => {
     from "products"`;
   db.query(sql)
     .then(result => {
-      if (!result) {
-        res.status(404).json({
-          error: 'Cannot find products'
-        });
-        return;
-      }
       const products = result.rows;
       res.status(200).json(products);
     })
