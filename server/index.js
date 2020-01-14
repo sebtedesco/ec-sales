@@ -41,6 +41,33 @@ app.get('/api/products', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/products/:productId', (req, res, next) => {
+  const productId = parseInt(req.params.productId);
+  if (isNaN(productId) || productId < 0) {
+    res.status(400).json({
+      error: 'Please enter a positive integer'
+    });
+    return;
+  }
+  const sql = `
+    select *
+    from "products"
+   where "productId" = $1`;
+  const value = [productId];
+  db.query(sql, value)
+    .then(result => {
+      const product = result.rows[0];
+      if (!result.rows[0]) {
+        res.status(500).json({
+          error: 'No product found'
+        });
+        return;
+      }
+      res.status(200).json(product);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
