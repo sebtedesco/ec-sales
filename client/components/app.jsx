@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './header';
+import ProductList from './product-list';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class App extends React.Component {
       message: null,
       isLoading: true
     };
-  };
+  }
 
   componentDidMount() {
     fetch('/api/health-check')
@@ -16,7 +17,7 @@ export default class App extends React.Component {
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
-  };
+  }
 
   render() {
     return (
@@ -29,5 +30,5 @@ export default class App extends React.Component {
         </div>
       </div>
     );
-  };
-};
+  }
+}
