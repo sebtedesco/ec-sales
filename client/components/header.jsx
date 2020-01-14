@@ -1,16 +1,12 @@
 import React from 'react';
 
-class Header extends React.Component {
-  // constructor(props) {
-  //   super(props);
-
-  // }
+export default class Header extends React.Component {
 
   render() {
     return (
-      <h1>Wicked Sales</h1>
+      <header>
+        <h3 className="col header pt-3 pr-3 pb-3 pl-12">$ Wicked Sales</h3>
+      </header>
     );
   }
-}
-
-export default Header;
+};
