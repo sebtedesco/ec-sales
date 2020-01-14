@@ -1,0 +1,14 @@
+
+.product-image-container {
+  height: 200px;
+}
+
+.product-image {
+  height: 200px;
+  object-fit: contain;
+}
+
+.header {
+  color: white;
+  background-color: rgb(52, 58, 64);
+};
