@@ -37,10 +37,6 @@ export default class ProductList extends React.Component {
               return <ProductListItem
                 key={product.productId}
                 product={product}
-                // productImage={product.image}
-                // productName={product.name}
-                // productPrice={product.price}
-                // productDescription={product.shortDescription}
               />;
             })
           }
