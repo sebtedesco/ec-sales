@@ -1,4 +1,18 @@
 
+.container.details-container {
+  justify-content: center;
+  align-items: center;
+}
+
+.product-image, .back-to-catalog {
+  cursor: pointer;
+}
+
+.product-image-details {
+  height: 250px;
+  object-fit: contain;
+}
+
 .product-image-container {
   height: 200px;
 }

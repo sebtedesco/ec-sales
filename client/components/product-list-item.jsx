@@ -9,6 +9,9 @@ export default function ProductListItem(props) {
           src={props.product.image}
           className="card-img-top product-image"
           alt="product image"
+          onClick={() => props.setViewCallback('details', {
+            productId: props.product.productId
+          })}
         />
       </div>
       <div className="card-body p-2">
