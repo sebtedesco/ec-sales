@@ -37,6 +37,7 @@ export default class ProductList extends React.Component {
               return <ProductListItem
                 key={product.productId}
                 product={product}
+                setViewCallback={this.props.setViewMethod}
               />;
             })
           }
