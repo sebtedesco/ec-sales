@@ -68,6 +68,97 @@ app.get('/api/products/:productId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/cart', (req, res, next) => {
+  if (!req.session.cartId) {
+    res.json([]);
+    return;
+  }
+  const sql = `
+    select "c"."cartItemId",
+      "c"."price",
+      "p"."productId",
+      "p"."image",
+      "p"."name",
+      "p"."shortDescription"
+    from "cartItems" as "c"
+    join "products" as "p" using("productId")
+    where "c"."cartId" = $1`;
+  const value = [req.session.cartId];
+  db.query(sql, value)
+    .then(cartItems => {
+      const cartItemsResult = cartItems.rows;
+      res.status(200).json(cartItemsResult);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/cart', (req, res, next) => {
+  const productId = parseInt(req.body.productId);
+  if (!productId) {
+    res.status(400).json({
+      error: 'Please enter a productId number'
+    });
+    return;
+  }
+  const sqlPrice = `
+  select "price"
+    from "products"
+   where "productId" = $1`;
+  const value = [productId];
+  db.query(sqlPrice, value)
+    .then(priceResult => {
+      if (!priceResult.rows.length) {
+        throw new ClientError('No product with this productId exists', 400);
+      }
+      if (req.session.cartId) {
+        return {
+          cartId: req.session.cartId,
+          price: priceResult.rows[0].price
+        };
+      } else {
+        const sqlNewCart = `
+        insert into "carts" ("cartId", "createdAt")
+        values  (default, default)
+        returning "cartId"`;
+        return db.query(sqlNewCart)
+          .then(cartResult => {
+            return {
+              cartId: cartResult.rows[0].cartId,
+              price: priceResult.rows[0].price
+            };
+          });
+      }
+    })
+    .then(result => {
+      req.session.cartId = result.cartId;
+      const newCartItemRow = `
+      insert into "cartItems" ("cartId", "productId", "price")
+      values ($1, $2, $3)
+      returning "cartItemId"`;
+      const values = [result.cartId, productId, result.price];
+      return db.query(newCartItemRow, values);
+    })
+    // Q: why does huge object return and not just the cartItemId (...returning "cartItemId"`)?
+    .then(result => {
+      const cartItemInfo = `
+      select "c"."cartItemId",
+      "c"."price",
+      "p"."productId",
+      "p"."image",
+      "p"."name",
+      "p"."shortDescription"
+  from "cartItems" as "c"
+  join "products" as "p" using ("productId")
+where "c"."cartItemId" = $1`;
+      const value = [result.rows[0].cartItemId];
+      return db.query(cartItemInfo, value);
+    })
+    .then(result => {
+      res.status(200).json(result.rows[0]);
+    })
+    .catch(err => next(err));
+});
+
 app.use('/api', (req, res, next) => {
   next(new ClientError(`cannot ${req.method} ${req.originalUrl}`, 404));
 });
