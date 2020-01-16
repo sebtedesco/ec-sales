@@ -69,13 +69,16 @@ app.get('/api/products/:productId', (req, res, next) => {
 });
 
 app.get('/api/cart', (req, res, next) => {
+  if (req.session.cartId) {
+    return [];
+  }
   const sql = `
     select *
     from "carts"`;
   db.query(sql)
-    .then(result => {
-      const carts = result.rows;
-      res.status(200).json(carts);
+    .then(cartItems => {
+      const cartItemsResult = cartItems.rows;
+      res.status(200).json(cartItemsResult);
     })
     .catch(err => next(err));
 });
@@ -96,8 +99,7 @@ app.post('/api/cart', (req, res, next) => {
   db.query(sqlPrice, value)
     .then(priceResult => {
       if (!priceResult.rows.length) {
-        res.status(400).json({ error: 'No product with this ProductId exists' }
-        );
+        throw new ClientError('No product with this productId exists', 400);
       }
       if (req.session.cartId) {
         return {
