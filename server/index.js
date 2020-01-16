@@ -84,7 +84,7 @@ app.post('/api/cart', (req, res, next) => {
   const productId = parseInt(req.body.productId);
   if (!productId) {
     res.status(400).json({
-      error: 'Please enter a positive integer'
+      error: 'Please enter a productId number'
     });
     return;
   }
@@ -96,21 +96,8 @@ app.post('/api/cart', (req, res, next) => {
   db.query(sqlPrice, value)
     .then(priceResult => {
       if (!priceResult.rows.length) {
-        res.status(400).json({ error: 'No product with this Id exists' }
+        res.status(400).json({ error: 'No product with this ProductId exists' }
         );
-      }
-      if (req.session.cartId) {
-        const sqlNewCart = `
-        insert into "carts" ("cartId", "createdAt")
-        values  (default, default)
-        returning "cartId"`;
-        return db.query(sqlNewCart)
-          .then(cartResult => {
-            return {
-              cartId: cartResult.rows[0].cartId,
-              price: priceResult.rows[0].price
-            };
-          });
       }
       if (req.session.cartId) {
         return {
