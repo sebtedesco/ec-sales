@@ -54,11 +54,11 @@ export default class App extends React.Component {
     };
     fetch('/api/cart', init)
       .then(response => {
-        response.json();
+        return response.json();
       })
       .then(response => {
         const newCartArr = [...this.state.cart];
-        newCartArr.push(productObj);
+        newCartArr.push(response);
         this.setState({ cart: newCartArr });
       })
       .catch(err => console.error(err));

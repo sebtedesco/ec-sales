@@ -10,7 +10,6 @@ export default class ProductDetails extends React.Component {
   }
 
   componentDidMount() {
-    // console.log(this.props.productId)
     this.getProductDetails(this.props.productId);
   }
 
@@ -23,7 +22,6 @@ export default class ProductDetails extends React.Component {
         return response.json();
       })
       .then(product => {
-        // TARGET PRODUCT BY ID HERE
         this.setState(state => ({
           product: product
         }));
@@ -74,5 +72,3 @@ export default class ProductDetails extends React.Component {
     }
   }
 }
-
-// onClick = {() => this.props.addToCart(this.state.product); this.props.setViewMethod('catalog', {})}
