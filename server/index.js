@@ -74,9 +74,17 @@ app.get('/api/cart', (req, res, next) => {
     return;
   }
   const sql = `
-    select *
-    from "carts"`;
-  db.query(sql)
+    select "c"."cartItemId",
+      "c"."price",
+      "p"."productId",
+      "p"."image",
+      "p"."name",
+      "p"."shortDescription"
+    from "cartItems" as "c"
+    join "products" as "p" using("productId")
+    where "c"."cartId" = $1`;
+  const value = [req.session.cartId];
+  db.query(sql, value)
     .then(cartItems => {
       const cartItemsResult = cartItems.rows;
       res.status(200).json(cartItemsResult);
