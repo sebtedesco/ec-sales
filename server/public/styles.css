@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.product-image, .back-to-catalog {
+.product-image, .back-to-catalog, .cart-items {
   cursor: pointer;
 }
 
@@ -19,6 +19,12 @@
 
 .product-image {
   height: 200px;
+  object-fit: contain;
+}
+
+.cart-image{
+  max-width: 100%;
+  height: 225px;
   object-fit: contain;
 }
 
