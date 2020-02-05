@@ -39,9 +39,9 @@ To be completed before showing preview
 
 1. Clone the repository.
 
-    ```shell
+```shell
     git clone https://github.com/sebtedesco/wicked-sales.git
-    ```
+```
 
 2. Install all dependencies with NPM.
 ```shell
@@ -54,4 +54,4 @@ To be completed before showing preview
     npm run dev
 ```
 
-.4 Once started, you can view the application by opening [https://localhost:3000](https://localhost:3000)
+4. Once started, you can view the application by opening [https://localhost:3000](https://localhost:3000)
