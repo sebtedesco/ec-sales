@@ -4,7 +4,7 @@ A full stack Node.js and React shopping cart app for electric cars.
 
 ## Live Demo
 
-Play the game live at [https://www.ec.sebtedesco.com](https://www.ec-sales.sebtedesco.com)
+Play the game live at [https://www.ec-sales.sebtedesco.com](https://www.ec-sales.sebtedesco.com)
 
 ## Technologies Used
 
