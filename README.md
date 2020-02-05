@@ -1,4 +1,4 @@
-# Wicked Sales
+# EC Sales
 
 A full stack Node.js and React shopping cart app for electric cars.
 
