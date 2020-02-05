@@ -33,7 +33,7 @@ To be completed before showing preview
 
 - Node.js 10 or higher
 - NPM 6 or higher
-- 
+- PostgreSQL 6 or higher
 
 #### Getting Started
 
