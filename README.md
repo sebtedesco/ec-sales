@@ -1,10 +1,10 @@
 # Wicked Sales
 
-A full stack Node.js and React shopping cart app.
+A full stack Node.js and React shopping cart app for electric cars.
 
 ## Live Demo
 
-Play the game live at [https://www.gadgetsales.sebtedesco.com](https://www.gadgetsales.sebtedesco.com)
+Play the game live at [https://www.ec-sales.sebtedesco.com](https://www.ec-sales.sebtedesco.com)
 
 ## Technologies Used
 
@@ -40,7 +40,7 @@ To be completed before showing preview
 1. Clone the repository.
 
 ```shell
-git clone https://github.com/sebtedesco/wicked-sales.git
+git clone https://github.com/sebtedesco/ec-sales.git
 ```
 
 2. Install all dependencies with NPM.
