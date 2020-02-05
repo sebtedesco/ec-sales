@@ -29,12 +29,29 @@ Play the game live at [https://www.gadgetsales.sebtedesco.com](https://www.gadge
 
 To be completed before showing preview
 
+## System Requirements
+
+- Node.js 10 or higher
+- NPM 6 or higher
+- 
+
 #### Getting Started
 
 1. Clone the repository.
 
     ```shell
-    git clone https://github.com/sebtedesco/memory-match.git
+    git clone https://github.com/sebtedesco/wicked-sales.git
     ```
 
-2. Go to `index.html` in Text Editor and open in browser
+2. Install all dependencies with NPM.
+```shell
+    git clone https://github.com/sebtedesco/wicked-sales.git
+```
+
+3. Start the project.
+
+```shell
+    npm run dev
+```
+
+.4 Once started, you can view the application by opening [https://localhost:3000](https://localhost:3000)
