@@ -180,7 +180,7 @@ app.post('/api/orders', (req, res, next) => {
       DELETE from "carts" WHERE "cartId" = $1`;
       const value = [cartId];
       db.query(deleteSql, value)
-        .then(res.status(200).json(response.rows[0]));
+        .then(res.status(201).json(response.rows[0]));
     });
 });
 
