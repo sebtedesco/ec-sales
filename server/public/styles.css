@@ -4,7 +4,7 @@
   align-items: center;
 }
 
-.product-image, .back-to-catalog, .cart-items {
+#productCard, .back-to-catalog, .cart-items {
   cursor: pointer;
 }
 
