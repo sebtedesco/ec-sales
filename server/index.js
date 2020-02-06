@@ -52,7 +52,7 @@ app.get('/api/products/:productId', (req, res, next) => {
   const sql = `
     select *
     from "products"
-   where "productId" = $1`;
+   WHERE "productId" = $1`;
   const value = [productId];
   db.query(sql, value)
     .then(result => {
@@ -81,8 +81,8 @@ app.get('/api/cart', (req, res, next) => {
       "p"."name",
       "p"."shortDescription"
     from "cartItems" as "c"
-    join "products" as "p" using("productId")
-    where "c"."cartId" = $1`;
+    JOIN "products" as "p" using("productId")
+    WHERE "c"."cartId" = $1`;
   const value = [req.session.cartId];
   db.query(sql, value)
     .then(cartItems => {
@@ -103,7 +103,7 @@ app.post('/api/cart', (req, res, next) => {
   const sqlPrice = `
   select "price"
     from "products"
-   where "productId" = $1`;
+   WHERE "productId" = $1`;
   const value = [productId];
   db.query(sqlPrice, value)
     .then(priceResult => {
@@ -141,15 +141,15 @@ app.post('/api/cart', (req, res, next) => {
     // Q: why does a huge jumble of crap return and not just the cartItemId (...returning "cartItemId"`)?
     .then(result => {
       const cartItemInfo = `
-      select "c"."cartItemId",
+      SELECT "c"."cartItemId",
       "c"."price",
       "p"."productId",
       "p"."image",
       "p"."name",
       "p"."shortDescription"
-  from "cartItems" as "c"
-  join "products" as "p" using ("productId")
-where "c"."cartItemId" = $1`;
+  FROM "cartItems" as "c"
+  JOIN "products" as "p" using ("productId")
+WHERE "c"."cartItemId" = $1`;
       const value = [result.rows[0].cartItemId];
       return db.query(cartItemInfo, value);
     })
@@ -157,6 +157,31 @@ where "c"."cartItemId" = $1`;
       res.status(200).json(result.rows[0]);
     })
     .catch(err => next(err));
+});
+
+app.post('/api/orders', (req, res, next) => {
+  const cartId = req.session.cartId;
+  const name = req.body.name;
+  const creditCard = req.body.creditCard;
+  const shippingAddress = req.body.shippingAddress;
+  if (!cartId) {
+    throw new ClientError('No cartId in this request. cartId required.', 400);
+  } else if (!name || !creditCard || !shippingAddress) {
+    throw new ClientError('Name, credit card, and shipping address are required. One or more are missing.', 400);
+  }
+  const sqlCheckoutInfo = `
+    INSERT into "orders" ("cartId", "name", "creditCard", "shippingAddress")
+    VALUES ($1, $2, $3, $4)
+    returning *`;
+  const values = [cartId, name, creditCard, shippingAddress];
+  db.query(sqlCheckoutInfo, values)
+    .then(response => {
+      const deleteSql = `
+      DELETE from "carts" WHERE "cartId" = $1`;
+      const value = [cartId];
+      db.query(deleteSql, value)
+        .then(res.status(200).json(response.rows[0]));
+    });
 });
 
 app.use('/api', (req, res, next) => {
