@@ -138,7 +138,7 @@ app.post('/api/cart', (req, res, next) => {
       const values = [result.cartId, productId, result.price];
       return db.query(newCartItemRow, values);
     })
-    // Q: why does huge object return and not just the cartItemId (...returning "cartItemId"`)?
+    // Q: why does a huge jumble of crap return and not just the cartItemId (...returning "cartItemId"`)?
     .then(result => {
       const cartItemInfo = `
       select "c"."cartItemId",
