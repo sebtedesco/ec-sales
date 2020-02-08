@@ -147,9 +147,9 @@ app.post('/api/cart', (req, res, next) => {
       "p"."image",
       "p"."name",
       "p"."shortDescription"
-  FROM "cartItems" as "c"
-  JOIN "products" as "p" using ("productId")
-WHERE "c"."cartItemId" = $1`;
+      FROM "cartItems" as "c"
+      JOIN "products" as "p" using ("productId")
+      WHERE "c"."cartItemId" = $1`;
       const value = [result.rows[0].cartItemId];
       return db.query(cartItemInfo, value);
     })
@@ -163,25 +163,27 @@ app.post('/api/orders', (req, res, next) => {
   const cartId = req.session.cartId;
   const name = req.body.name;
   const creditCard = req.body.creditCard;
-  const shippingAddress = req.body.shippingAddress;
+  const address = req.body.address;
   if (!cartId) {
     throw new ClientError('No cartId in this request. cartId required.', 400);
-  } else if (!name || !creditCard || !shippingAddress) {
+  } else if (!name || !creditCard || !address) {
     throw new ClientError('Name, credit card, and shipping address are required. One or more are missing.', 400);
   }
   const sqlCheckoutInfo = `
     INSERT into "orders" ("cartId", "name", "creditCard", "shippingAddress")
     VALUES ($1, $2, $3, $4)
     returning *`;
-  const values = [cartId, name, creditCard, shippingAddress];
+  const values = [cartId, name, creditCard, address];
   db.query(sqlCheckoutInfo, values)
     .then(response => {
       const deleteSql = `
       DELETE from "carts" WHERE "cartId" = $1`;
       const value = [cartId];
       db.query(deleteSql, value)
-        .then(res.status(201).json(response.rows[0]));
-    });
+        .then(res.status(201).json(response.rows[0]))
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
 });
 
 app.use('/api', (req, res, next) => {

@@ -7,7 +7,7 @@ export default function CartSummary(props) {
       <div className="col-2 back-to-catalog">
         <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
       </div>
-      <div>
+      <div className="p-4">
         {
           props.cart.map(cartItem => {
             return <CartSummaryItem
@@ -16,6 +16,9 @@ export default function CartSummary(props) {
             />;
           })
         }
+        <div>
+          <button type="button" className="btn btn-primary checkout-button" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
+        </div>
       </div>
     </>
   );

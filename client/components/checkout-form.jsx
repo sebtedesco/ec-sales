@@ -28,7 +28,6 @@ export default class Checkout extends React.Component {
   render() {
     return (
       <form>
-        <div className="nav"></div>
         <h2>My Cart</h2>
         <p id="order-total">Order Total: $</p>
         <div className="form-group">
