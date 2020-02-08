@@ -56,7 +56,7 @@ export default class ProductDetails extends React.Component {
                   <h4 className="card-title">{this.state.product.name}</h4>
                   <p className="card-text">{price}</p>
                   <p className="card-text">{this.state.product.shortDescription}</p>
-                  <button type="button" className="btn btn-primary" onClick={() => { this.props.addToCart(this.state.product); this.props.setViewMethod('catalog', {}); }}
+                  <button type="button" className="btn btn-primary float-right" onClick={() => { this.props.addToCart(this.state.product); this.props.setViewMethod('catalog', {}); }}
                   >Add to Cart</button>
                 </div>
               </div>
