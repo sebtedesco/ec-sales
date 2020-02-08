@@ -1,6 +1,6 @@
 # EC Sales
 
-A full stack Node.js and React shopping cart app for ec cars.
+A full stack Node.js and React shopping cart app for electric cars.
 
 ## Live Demo
 
