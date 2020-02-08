@@ -1,4 +1,5 @@
 import React from 'react';
+// import CartSummary from './cart-summary';
 
 export default class Checkout extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ export default class Checkout extends React.Component {
 
   handleNameChange(event) {
     this.setState({ name: event.target.value });
+    // this.state.creditCard.foreach(apple);
   }
 
   handleCreditCardChange(event) {
