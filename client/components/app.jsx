@@ -17,6 +17,7 @@ export default class App extends React.Component {
       },
       cart: []
     };
+
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
@@ -94,7 +95,7 @@ export default class App extends React.Component {
     } else if (this.state.view.name === 'cart') {
       reactElementToDisplay = <CartSummary cart={this.state.cart} setViewMethod={this.setView} />;
     } else if (this.state.view.name === 'checkout') {
-      reactElementToDisplay = <Checkout placeOrder={this.placeOrder} setViewMethod={this.setView} cartPrice={this.state.cart.price} />;
+      reactElementToDisplay = <Checkout placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
     }
     return (
       <div className="container">
