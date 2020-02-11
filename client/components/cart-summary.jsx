@@ -15,7 +15,7 @@ export default function CartSummary(props) {
       <div className="col-2 back-to-catalog">
         <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
       </div>
-      <h4>Cart Total: {totalPriceFormatted}</h4>
+      <p className="order-total">Cart Total: {totalPriceFormatted}</p>
       <div className="p-4">
         {
           props.cart.map(cartItem => {

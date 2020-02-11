@@ -37,7 +37,7 @@ export default class Checkout extends React.Component {
     return (
       <form>
         <h2>My Cart</h2>
-        <p id="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
+        <p className="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Full Name</label>
           <input
