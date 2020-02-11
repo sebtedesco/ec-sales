@@ -9,29 +9,39 @@ export default class Checkout extends React.Component {
       address: '',
       validation: {
         nameVal: false,
-        emailVal: false,
+        creditCardVal: false,
         addressVal: false
       }
     };
 
-    // this.validateName = this.validateName.bind(this);
-    this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
+    this.validateName = this.validateName.bind(this);
+    this.validateCreditCard = this.validateCreditCard.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
   }
 
-  // handleNameChange(event) {
-  // }
+  handleNameChange(event) {
+  }
 
-  // validateName(event) {
-  //   this.setState({
-  //     name: event.target.value,
-  //     validation.nameVal
-  //    });
-  //   const isNameValid = rules.test(event.target.value);
-  // }
+  validateName(event) {
+    const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
+    const isNameValid = rules.test(event.target.value);
+    const nameValCopy = { ...this.state.validation.nameVal };
+    nameValCopy.nameVal = isNameValid;
+    this.setState({
+      name: event.target.value,
+      validation: nameValCopy
+    });
+  }
 
-  handleCreditCardChange(event) {
-    this.setState({ creditCard: event.target.value });
+  validateCreditCard(event) {
+    const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
+    const isCreditCardValid = rules.test(event.target.value);
+    const creditCardValCopy = { ...this.state.validation.creditCardVal };
+    creditCardValCopy.creditCardVal = isCreditCardValid;
+    this.setState({
+      creditCard: event.target.value,
+      validation: creditCardValCopy
+    });
   }
 
   handleAddressChange(event) {
@@ -45,7 +55,6 @@ export default class Checkout extends React.Component {
       totalPrice += item.price;
     });
     const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
-    // console.log(totalPriceFormatted);
     return (
       <form>
         <h2>My Cart</h2>
@@ -56,9 +65,9 @@ export default class Checkout extends React.Component {
             type="text"
             className="form-control"
             value={this.state.name}
-            // onChange={this.validateName}
+            onChange={this.validateName}
           />
-          <small className="form-text text-muted">Please enter full name.</small>
+          <small className={'form-text text-muted'}> { this.state.validation.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputPassword1">Credit Card</label>
@@ -66,7 +75,8 @@ export default class Checkout extends React.Component {
             type="text"
             className="form-control"
             value={this.state.creditCard}
-            onChange={this.handleCreditCardChange} />
+            onChange={this.validateCreditCard} />
+          <small className={'form-text text-muted'}> {this.state.validation.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
         </div>
         <div className="form-group">
           <label htmlFor="exampleInputPassword1">Shipping Address</label>

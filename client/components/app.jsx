@@ -98,14 +98,16 @@ export default class App extends React.Component {
       reactElementToDisplay = <Checkout placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
     }
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col">
-            <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView}/>
-            { reactElementToDisplay }
+      <>
+        <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView} />
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              { reactElementToDisplay }
+            </div>
           </div>
         </div>
-      </div>
+      </>
     );
   }
 }
