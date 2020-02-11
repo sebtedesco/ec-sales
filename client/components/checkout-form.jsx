@@ -8,6 +8,7 @@ export default class Checkout extends React.Component {
       creditCard: '',
       address: ''
     };
+
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
@@ -26,10 +27,17 @@ export default class Checkout extends React.Component {
   }
 
   render() {
+    const arrOfCartItems = this.props.cart;
+    let totalPrice = null;
+    arrOfCartItems.forEach(item => {
+      totalPrice += item.price;
+    });
+    const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
+    // console.log(totalPriceFormatted);
     return (
       <form>
         <h2>My Cart</h2>
-        <p id="order-total">Order Total: $</p>
+        <p id="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
         <div className="form-group">
           <label htmlFor="exampleInputEmail1">Full Name</label>
           <input

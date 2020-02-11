@@ -2,6 +2,14 @@ import React from 'react';
 import CartSummaryItem from './cart-summary-item';
 
 export default function CartSummary(props) {
+
+  // const arrOfCartItems = props.cart;
+  // let totalPrice = null;
+  // arrOfCartItems.forEach(item => {
+  //   totalPrice += item.price;
+  // });
+  // console.log(totalPrice);
+
   return (
     <>
       <div className="col-2 back-to-catalog">
