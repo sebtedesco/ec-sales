@@ -36,10 +36,10 @@
   object-fit: contain;
 }
 
-#order-total {
+.order-total {
   color: grey;
   margin: 20px 0;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
 }
 
 .header {
