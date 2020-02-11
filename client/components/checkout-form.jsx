@@ -6,17 +6,29 @@ export default class Checkout extends React.Component {
     this.state = {
       name: '',
       creditCard: '',
-      address: ''
+      address: '',
+      validation: {
+        nameVal: false,
+        emailVal: false,
+        addressVal: false
+      }
     };
 
-    this.handleNameChange = this.handleNameChange.bind(this);
+    // this.validateName = this.validateName.bind(this);
     this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
   }
 
-  handleNameChange(event) {
-    this.setState({ name: event.target.value });
-  }
+  // handleNameChange(event) {
+  // }
+
+  // validateName(event) {
+  //   this.setState({
+  //     name: event.target.value,
+  //     validation.nameVal
+  //    });
+  //   const isNameValid = rules.test(event.target.value);
+  // }
 
   handleCreditCardChange(event) {
     this.setState({ creditCard: event.target.value });
@@ -44,7 +56,8 @@ export default class Checkout extends React.Component {
             type="text"
             className="form-control"
             value={this.state.name}
-            onChange={this.handleNameChange}/>
+            // onChange={this.validateName}
+          />
           <small className="form-text text-muted">Please enter full name.</small>
         </div>
         <div className="form-group">
