@@ -4,7 +4,7 @@ export default function ProductListItem(props) {
   const price = `$${parseInt((props.product.price) / 100).toFixed(2)}`;
   return (
     <div
-      className="justify-content-center card col-3 m-4"
+      className="justify-content-center card col-lg-3 col-md-5 m-4"
       id="productCard"
       onClick={() => props.setViewCallback('details', {
         productId: props.product.productId

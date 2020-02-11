@@ -4,10 +4,21 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <header className="header">
-        <h3 className="col-10 pt-3 pr-3 pb-3 pl-12 d-inline-block">$ Wicked Sales</h3>
-        <h5 className="col-2 d-inline-block cart-items" onClick={() => this.props.setViewMethod('cart', {})}>{this.props.cartItemCount} Items <i className="fas fa-shopping-cart"></i></h5>
-      </header>
+      <nav className="navbar navbar-light bg-dark" onClick={() => this.props.setViewMethod('cart', {})}>
+        <div className="header-title">
+          $ Wicked Sales
+        </div>
+        <button type="button" className="btn btn-light">
+          <h5 className="m-0"> <i className="fas fa-shopping-cart"></i> {this.props.cartItemCount} </h5>
+        </button>
+      </nav>
     );
   }
 }
+
+// <header className="container-fluid justify-content-between">
+// <div className="row">
+//   <h3>$ Wicked Sales</h3>
+//   <h5 onClick={() => this.props.setViewMethod('cart', {})}>{this.props.cartItemCount} Items <i className="fas fa-shopping-cart"></i></h5>
+// </div>
+// </header>
