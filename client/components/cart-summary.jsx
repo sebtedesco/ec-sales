@@ -3,18 +3,19 @@ import CartSummaryItem from './cart-summary-item';
 
 export default function CartSummary(props) {
 
-  // const arrOfCartItems = props.cart;
-  // let totalPrice = null;
-  // arrOfCartItems.forEach(item => {
-  //   totalPrice += item.price;
-  // });
-  // console.log(totalPrice);
+  const arrOfCartItems = props.cart;
+  let totalPrice = null;
+  arrOfCartItems.forEach(item => {
+    totalPrice += item.price;
+  });
+  const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
 
   return (
     <>
       <div className="col-2 back-to-catalog">
         <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
       </div>
+      <h4>Cart Total: {totalPriceFormatted}</h4>
       <div className="p-4">
         {
           props.cart.map(cartItem => {
