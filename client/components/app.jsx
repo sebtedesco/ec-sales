@@ -99,14 +99,8 @@ export default class App extends React.Component {
     }
     return (
       <>
-        <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView} />
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              { reactElementToDisplay }
-            </div>
-          </div>
-        </div>
+        <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView}/>
+        { reactElementToDisplay }
       </>
     );
   }
