@@ -56,41 +56,45 @@ export default class Checkout extends React.Component {
     });
     const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     return (
-      <form>
-        <h2>My Cart</h2>
-        <p className="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
-        <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Full Name</label>
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.name}
-            onChange={this.validateName}
-          />
-          <small className={'form-text text-muted'}> { this.state.validation.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
+      <form className="container outermost-container">
+        <div className="row">
+          <div className="col">
+            <h2>My Cart</h2>
+            <p className="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
+            <div className="form-group">
+              <label htmlFor="exampleInputEmail1">Full Name</label>
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.name}
+                onChange={this.validateName}
+              />
+              <small className={'form-text text-muted'}> { this.state.validation.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">Credit Card</label>
+              <input
+                type="text"
+                className="form-control"
+                value={this.state.creditCard}
+                onChange={this.validateCreditCard} />
+              <small className={'form-text text-muted'}> {this.state.validation.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+            </div>
+            <div className="form-group">
+              <label htmlFor="exampleInputPassword1">Shipping Address</label>
+              <textarea
+                type="text"
+                className="form-control"
+                rows="3"
+                value={this.state.address}
+                onChange={this.handleAddressChange} />
+            </div>
+            <button onClick={e => {
+              e.preventDefault();
+              this.props.placeOrder(this.state);
+            }} className="btn btn-primary">Submit</button>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Credit Card</label>
-          <input
-            type="text"
-            className="form-control"
-            value={this.state.creditCard}
-            onChange={this.validateCreditCard} />
-          <small className={'form-text text-muted'}> {this.state.validation.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
-        </div>
-        <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Shipping Address</label>
-          <textarea
-            type="text"
-            className="form-control"
-            rows="3"
-            value={this.state.address}
-            onChange={this.handleAddressChange} />
-        </div>
-        <button onClick={e => {
-          e.preventDefault();
-          this.props.placeOrder(this.state);
-        }} className="btn btn-primary">Submit</button>
       </form>
     );
   }

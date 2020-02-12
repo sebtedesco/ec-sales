@@ -4,11 +4,11 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <nav className="navbar navbar-light bg-dark" onClick={() => this.props.setViewMethod('cart', {})}>
-        <div className="header-title">
+      <nav className="navbar navbar-light bg-dark fixed-top">
+        <div className="header-title" onClick={() => this.props.setViewMethod('catalog', {})}>
           $ Wicked Sales
         </div>
-        <button type="button" className="btn btn-light">
+        <button type="button" className="btn btn-light" onClick={() => this.props.setViewMethod('cart', {})}>
           <h5 className="m-0"> <i className="fas fa-shopping-cart"></i> {this.props.cartItemCount} </h5>
         </button>
       </nav>
