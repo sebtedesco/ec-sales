@@ -12,21 +12,29 @@ export default function CartSummary(props) {
 
   return (
     <>
-      <div className="col-2 back-to-catalog">
-        <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
+      <div className="container cart-summary">
+        <div className="row">
+          <div className="col">
+            <div className="d-inline-block back-to-catalog">
+              <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
+            </div>
+            <div className="p-4">
+              {
+                props.cart.map(cartItem => {
+                  return <CartSummaryItem
+                    key={cartItem.cartItemId}
+                    cartItem={cartItem}
+                  />;
+                })
+              }
+            </div>
+          </div>
+        </div>
       </div>
-      <p className="order-total">Cart Total: {totalPriceFormatted}</p>
-      <div className="p-4">
-        {
-          props.cart.map(cartItem => {
-            return <CartSummaryItem
-              key={cartItem.cartItemId}
-              cartItem={cartItem}
-            />;
-          })
-        }
-        <div>
-          <button type="button" className="btn btn-primary checkout-button" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
+      <div className="container-fluid">
+        <div className="bottom-nav row justify-content-between">
+          <p className="col order-total">Cart Total: {totalPriceFormatted}</p>
+          <button type="button" className="btn btn-primary mr-5" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
         </div>
       </div>
     </>

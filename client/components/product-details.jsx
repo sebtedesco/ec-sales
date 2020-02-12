@@ -37,12 +37,12 @@ export default class ProductDetails extends React.Component {
         <div className="container details-container mt-5">
           <div className="details-inner-container p-4 border">
             <div className="row">
-              <div className="col-2 back-to-catalog">
+              <div className="d-inline-block back-to-catalog">
                 <p onClick={() => this.props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
               </div>
             </div>
             <div className="row">
-              <div className="col">
+              <div className="col-lg">
                 <form className="imageDetails">
                   <img
                     className="product-image-details"
