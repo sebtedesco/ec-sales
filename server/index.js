@@ -176,6 +176,7 @@ app.post('/api/orders', (req, res, next) => {
   const values = [cartId, name, creditCard, address];
   db.query(sqlCheckoutInfo, values)
     .then(response => {
+      // console.log('now deleting row');
       const deleteSql = `
       DELETE from "carts" WHERE "cartId" = $1`;
       const value = [cartId];

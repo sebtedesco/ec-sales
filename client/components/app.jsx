@@ -78,6 +78,7 @@ export default class App extends React.Component {
     };
     fetch('/api/orders', init)
       .then(response => {
+        // console.log(`response ${response}`);
         this.setState({
           cart: [],
           view: { name: 'catalog' }
