@@ -138,7 +138,6 @@ app.post('/api/cart', (req, res, next) => {
       const values = [result.cartId, productId, result.price];
       return db.query(newCartItemRow, values);
     })
-    // Q: why does a huge jumble of crap return and not just the cartItemId (...returning "cartItemId"`)?
     .then(result => {
       const cartItemInfo = `
       SELECT "c"."cartItemId",
@@ -176,12 +175,8 @@ app.post('/api/orders', (req, res, next) => {
   const values = [cartId, name, creditCard, address];
   db.query(sqlCheckoutInfo, values)
     .then(response => {
-      const deleteSql = `
-      DELETE from "carts" WHERE "cartId" = $1`;
-      const value = [cartId];
-      db.query(deleteSql, value)
-        .then(res.status(201).json(response.rows[0]))
-        .catch(err => next(err));
+      delete req.session.cartId;
+      res.status(201).json(response.rows[0]);
     })
     .catch(err => next(err));
 });

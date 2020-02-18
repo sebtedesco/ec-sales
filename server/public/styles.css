@@ -4,9 +4,13 @@
   align-items: center;
 }
 
-/* .container., .outermost-container {
+.green {
+  color: green!important;
+}
 
-} */
+.red {
+  color: red!important;
+}
 
 .header-title, .btn, #productCard, .back-to-catalog, .cart-items {
   cursor: pointer;
