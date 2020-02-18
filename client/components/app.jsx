@@ -69,6 +69,9 @@ export default class App extends React.Component {
   }
 
   placeOrder(orderObject) {
+    if (!orderObject.name || !orderObject.creditCard || !orderObject.address) {
+      return console.error('one or more fields missing');
+    }
     const init = {
       method: 'POST',
       headers: {
@@ -78,7 +81,6 @@ export default class App extends React.Component {
     };
     fetch('/api/orders', init)
       .then(response => {
-        // console.log(`response ${response}`);
         this.setState({
           cart: [],
           view: { name: 'catalog' }

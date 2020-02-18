@@ -9,7 +9,18 @@ export default function CartSummary(props) {
     totalPrice += item.price;
   });
   const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
-
+  if (arrOfCartItems.length === 0) {
+    return (
+      <>
+        <div className="container cart-summary">
+          <div className="d-inline-block back-to-catalog">
+            <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
+          </div>
+          <h2>Your cart is empty.</h2>
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <div className="container cart-summary">

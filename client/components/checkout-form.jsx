@@ -6,46 +6,56 @@ export default class Checkout extends React.Component {
     this.state = {
       name: '',
       creditCard: '',
-      address: '',
-      validation: {
-        nameVal: false,
-        creditCardVal: false,
-        addressVal: false
-      }
+      address: ''
+      // validation: {
+      //   nameVal: false,
+      //   creditCardVal: false,
+      //   addressVal: false
+      // }
     };
 
-    this.validateName = this.validateName.bind(this);
-    this.validateCreditCard = this.validateCreditCard.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
     this.handleAddressChange = this.handleAddressChange.bind(this);
   }
 
   handleNameChange(event) {
-  }
-
-  validateName(event) {
-    const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
-    const isNameValid = rules.test(event.target.value);
-    const nameValCopy = { ...this.state.validation.nameVal };
-    nameValCopy.nameVal = isNameValid;
+    // const creditCardVal = this.state.validation.creditCardVal;
+    // const addressVal = this.state.validation.creditCardVal
+    // const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
+    // const isNameValid = rules.test(event.target.value);
+    // const nameValCopy = { ...this.state.validation.nameVal };
+    // nameValCopy.nameVal = isNameValid;
     this.setState({
-      name: event.target.value,
-      validation: nameValCopy
+      name: event.target.value
+      // validation: nameValCopy
     });
   }
 
-  validateCreditCard(event) {
-    const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
-    const isCreditCardValid = rules.test(event.target.value);
-    const creditCardValCopy = { ...this.state.validation.creditCardVal };
-    creditCardValCopy.creditCardVal = isCreditCardValid;
+  handleCreditCardChange(event) {
+    // const nameVal = this.state.validation.nameVal;
+    // const addressVal = this.state.validation.creditCardVal
+    // const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
+    // const isCreditCardValid = rules.test(event.target.value);
+    // const creditCardValCopy = { ...this.state.validation.creditCardVal };
+    // creditCardValCopy.creditCardVal = isCreditCardValid;
     this.setState({
-      creditCard: event.target.value,
-      validation: creditCardValCopy
+      creditCard: event.target.value
+      // validation: creditCardValCopy
     });
   }
 
   handleAddressChange(event) {
-    this.setState({ address: event.target.value });
+    // const creditCardVal = this.state.validation.nameVal;
+    // const nameVal = this.state.validation.nameVal
+    // const rules = /./;
+    // const isAddressValid = rules.test(event.target.value);
+    // const addressValCopy = { ...this.state.validation.addressVal };
+    // addressValCopy.addressVal = isAddressValid;
+    this.setState({
+      address: event.target.value
+      // validation: addressValCopy
+    });
   }
 
   render() {
@@ -67,9 +77,10 @@ export default class Checkout extends React.Component {
                 type="text"
                 className="form-control"
                 value={this.state.name}
-                onChange={this.validateName}
+                onChange={this.handleNameChange}
               />
-              <small className={'form-text text-muted'}> { this.state.validation.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
+              <small className={`form-text text-muted ${this.state.name ? 'green' : 'red'}`}> {this.state.name ? 'Name is valid!' : 'Name is required'} </small>
+              {/* <small className={`form-text text-muted ${this.state.validation.nameVal ? 'green' : 'red'}`}> { this.state.validation.nameVal ? 'Name is valid!' : 'Name is invalid' } </small> */}
             </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Credit Card</label>
@@ -77,8 +88,9 @@ export default class Checkout extends React.Component {
                 type="text"
                 className="form-control"
                 value={this.state.creditCard}
-                onChange={this.validateCreditCard} />
-              <small className={'form-text text-muted'}> {this.state.validation.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+                onChange={this.handleCreditCardChange} />
+              <small className={`form-text text-muted ${this.state.creditCard ? 'green' : 'red'}`}> {this.state.creditCard ? 'Credit card entry is valid!' : 'Credit card entry is required'} </small>
+              {/* <small className={`form-text text-muted ${this.state.validation.creditCardVal ? 'green' : 'red'}`}> {this.state.validation.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small> */}
             </div>
             <div className="form-group">
               <label htmlFor="exampleInputPassword1">Shipping Address</label>
@@ -88,6 +100,8 @@ export default class Checkout extends React.Component {
                 rows="3"
                 value={this.state.address}
                 onChange={this.handleAddressChange} />
+              <small className={`form-text text-muted ${this.state.address ? 'green' : 'red'}`}> {this.state.address ? 'Address entry is valid' : 'Address entry is required'} </small>
+              {/* <small className={`form-text text-muted ${this.state.validation.addressVal ? 'green' : 'red'}`}> {this.state.validation.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small> */}
             </div>
             <button onClick={e => {
               e.preventDefault();
