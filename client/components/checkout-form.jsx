@@ -100,7 +100,7 @@ export default class Checkout extends React.Component {
                 rows="3"
                 value={this.state.address}
                 onChange={this.handleAddressChange} />
-              <small className={`form-text text-muted ${this.state.address ? 'green' : 'red'}`}> {this.state.address ? 'Address entry is valid' : 'Address entry is required'} </small>
+              <small className={`form-text text-muted ${this.state.address ? 'green' : 'red'}`}> {this.state.address ? 'Address entry is valid!' : 'Address entry is required'} </small>
               {/* <small className={`form-text text-muted ${this.state.validation.addressVal ? 'green' : 'red'}`}> {this.state.validation.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small> */}
             </div>
             <button onClick={e => {
