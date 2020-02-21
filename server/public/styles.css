@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.checkout-field {
+  margin-left: 0;
+}
+
 .green {
   color: green!important;
 }
