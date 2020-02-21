@@ -27,63 +27,84 @@ export default class Checkout extends React.Component {
         cvv: false
       }
     };
-
-    this.handleNameChange = this.handleNameChange.bind(this);
-    this.handleCreditCardChange = this.handleCreditCardChange.bind(this);
-    this.handleAddressChange = this.handleAddressChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  // handleChange(event) {
-  //   event.preventDefault();
-  //   const { name, value } = event.target;
-  //   let errors = this.state.errors;
+  handleChange(event) {
+    event.preventDefault();
+    // const { name, value } = event.target;
+    const { value } = event.target;
+    const errors = this.state.errors;
 
-  //   switch(event) {
-  //     case 'fName': errors.fName
-  //   }
+    switch (event) {
+      case 'fName': errors.fName = value.length < 1 ? 'First name is required' : '';
+        break;
+      case 'lName': errors.fName = value.length < 1 ? 'Last name is required' : '';
+        break;
+      case 'street': errors.street = value.length < 1 ? 'Street is required' : '';
+        break;
+      case 'city': errors.city = value.length < 1 ? 'City is required' : '';
+        break;
+      case 'state': errors.state = value.length < 1 ? 'State is required' : '';
+        break;
+      case 'zip': errors.zip = value.length < 1 ? 'Zip Code is required' : '';
+        break;
+      case 'fullName': errors.fullName = value.length < 1 ? 'Full Name is required' : '';
+        break;
+      case 'creditCardNumber': errors.creditCardNumber = value.length < 1 ? 'Credit card number is required' : '';
+        break;
+      case 'expiration': errors.expiration = value.length < 1 ? 'Expiration date is required' : '';
+        break;
+      case 'cvv': errors.cvv = value.length < 1 ? 'CVV is required' : '';
+        break;
+    }
+
+    // this.setState({ errors, [name]: value }, () => {
+    //   console.log(errors);
+    // });
+  }
+
+  // handleNameChange(event) {
+  //   event.preventDefault();
+  //   const creditCardVal = this.state.errors.creditCardVal;
+  //   const addressVal = this.state.errors.creditCardVal;
+  //   const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
+  //   const isNameValid = rules.test(event.target.value);
+  //   const nameValCopy = { ...this.state.errors.nameVal };
+  //   nameValCopy.nameVal = isNameValid;
+  //   this.setState({
+  //     name: event.target.value,
+  //     errors: nameValCopy
+  //   });
   // }
 
-  handleNameChange(event) {
-    event.preventDefault();
-    // const creditCardVal = this.state.errors.creditCardVal;
-    // const addressVal = this.state.errors.creditCardVal;
-    const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
-    const isNameValid = rules.test(event.target.value);
-    const nameValCopy = { ...this.state.errors.nameVal };
-    nameValCopy.nameVal = isNameValid;
-    this.setState({
-      name: event.target.value,
-      errors: nameValCopy
-    });
-  }
+  // handleCreditCardChange(event) {
+  //   event.preventDefault();
+  //   const nameVal = this.state.errors.nameVal;
+  //   const addressVal = this.state.errors.creditCardVal;
+  //   const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
+  //   const isCreditCardValid = rules.test(event.target.value);
+  //   const creditCardValCopy = { ...this.state.errors.creditCardVal };
+  //   creditCardValCopy.creditCardVal = isCreditCardValid;
+  //   this.setState({
+  //     creditCard: event.target.value,
+  //     errors: creditCardValCopy
+  //   });
+  // }
 
-  handleCreditCardChange(event) {
-    event.preventDefault();
-    // const nameVal = this.state.errors.nameVal;
-    // const addressVal = this.state.errors.creditCardVal;
-    const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
-    const isCreditCardValid = rules.test(event.target.value);
-    const creditCardValCopy = { ...this.state.errors.creditCardVal };
-    creditCardValCopy.creditCardVal = isCreditCardValid;
-    this.setState({
-      creditCard: event.target.value,
-      errors: creditCardValCopy
-    });
-  }
-
-  handleAddressChange(event) {
-    event.preventDefault();
-    // const creditCardVal = this.state.errors.nameVal;
-    // const nameVal = this.state.errors.nameVal;
-    const rules = /./;
-    const isAddressValid = rules.test(event.target.value);
-    const addressValCopy = { ...this.state.errors.addressVal };
-    addressValCopy.addressVal = isAddressValid;
-    this.setState({
-      address: event.target.value,
-      errors: addressValCopy
-    });
-  }
+  // handleAddressChange(event) {
+  //   event.preventDefault();
+  //   const creditCardVal = this.state.errors.nameVal;
+  //   const nameVal = this.state.errors.nameVal;
+  //   const rules = /./;
+  //   const isAddressValid = rules.test(event.target.value);
+  //   const addressValCopy = { ...this.state.errors.addressVal };
+  //   addressValCopy.addressVal = isAddressValid;
+  //   this.setState({
+  //     address: event.target.value,
+  //     errors: addressValCopy
+  //   });
+  // }
 
   render() {
     const arrOfCartItems = this.props.cart;
@@ -107,8 +128,9 @@ export default class Checkout extends React.Component {
                   type="text"
                   placeholder="First Name"
                   className="form-control"
+                  name="fName"
                   value={this.state.name}
-                  onChange={this.handleNameChange}
+                  onChange={this.handleChange}
                 />
                 <small className={`form-text text-muted ${this.state.errors.nameVal ? 'green' : 'red'}`}> { this.state.errors.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
               </div>
@@ -116,9 +138,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Last Name"
+                  name="lName"
                   className="form-control"
                   value={this.state.name}
-                  onChange={this.handleNameChange}
+                  onChange={this.handleChange}
                 />
 
                 <small className={`form-text text-muted ${this.state.errors.nameVal ? 'green' : 'red'}`}> {this.state.errors.nameVal ? 'Name is valid!' : 'Name is invalid'} </small>
@@ -129,9 +152,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Street Address"
+                  name="street"
                   className="form-control"
                   value={this.state.address}
-                  onChange={this.handleAddressChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
               </div>
@@ -139,9 +163,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="City"
+                  name="city"
                   className="form-control"
                   value={this.state.address}
-                  onChange={this.handleAddressChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
               </div>
@@ -151,9 +176,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="State"
+                  name="state"
                   className="form-control"
                   value={this.state.address}
-                  onChange={this.handleAddressChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
               </div>
@@ -161,9 +187,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Zip Code"
+                  name="zip"
                   className="form-control"
                   value={this.state.address}
-                  onChange={this.handleAddressChange} />
+                  onChange={this.handleChange} />
                 <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
               </div>
             </div>
@@ -175,9 +202,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Full Name"
+                  name="fullName"
                   className="form-control"
                   value={this.state.creditCard}
-                  onChange={this.handleCreditCardChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
               </div>
@@ -185,9 +213,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Credit Card Number"
+                  name="creditCardNumber"
                   className="form-control"
                   value={this.state.creditCard}
-                  onChange={this.handleCreditCardChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
               </div>
@@ -197,9 +226,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="Expiration (MM/YY)"
+                  name="expiration"
                   className="form-control"
                   value={this.state.creditCard}
-                  onChange={this.handleCreditCardChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
               </div>
@@ -207,9 +237,10 @@ export default class Checkout extends React.Component {
                 <input
                   type="text"
                   placeholder="CVV"
+                  name="cvv"
                   className="form-control"
                   value={this.state.creditCard}
-                  onChange={this.handleCreditCardChange} />
+                  onChange={this.handleChange} />
 
                 <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
               </div>
