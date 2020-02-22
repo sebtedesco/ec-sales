@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 
 export default class Checkout extends React.Component {
@@ -15,16 +16,16 @@ export default class Checkout extends React.Component {
       expiration: '',
       cvv: '',
       errors: {
-        fName: false,
-        lName: false,
-        street: false,
-        city: false,
-        state: false,
-        zip: false,
-        fullName: false,
-        creditCardNumber: false,
-        expiration: false,
-        cvv: false
+        fName: true,
+        lName: true,
+        street: true,
+        city: true,
+        state: true,
+        zip: true,
+        fullName: true,
+        creditCardNumber: true,
+        expiration: true,
+        cvv: true
       }
     };
     this.handleChange = this.handleChange.bind(this);
@@ -33,17 +34,16 @@ export default class Checkout extends React.Component {
   handleChange(event) {
     event.preventDefault();
     // const { name, value } = event.target;
-    // eslint-disable-next-line no-console
     console.log('event', event);
     const name = event.target.name;
     const value = event.target.value;
 
-    const errors = this.state.errors;
+    const errors = {...this.state.errors};
 
-    switch (event) {
-      case 'fName': errors.fName = value.length < 1 ? 'First name is required' : '';
+    switch (name) {
+      case 'fName': errors.fName = value.length > 1 ? false : true;
         break;
-      case 'lName': errors.fName = value.length < 1 ? 'Last name is required' : '';
+      case 'lName': errors.lName = value.length < 1 ? 'Last name is required' : '';
         break;
       case 'street': errors.street = value.length < 1 ? 'Street is required' : '';
         break;
@@ -62,13 +62,11 @@ export default class Checkout extends React.Component {
       case 'cvv': errors.cvv = value.length < 1 ? 'CVV is required' : '';
         break;
     }
-    // eslint-disable-next-line no-console
     console.log('value', value);
-    // eslint-disable-next-line no-console
     console.log('name', name);
 
+    // this.setState({[name]: value});
     this.setState({ errors, [name]: value }, () => {
-    // eslint-disable-next-line no-console
       console.log(errors);
     });
   }
@@ -141,7 +139,7 @@ export default class Checkout extends React.Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
-                <small className={`form-text text-muted ${this.state.errors.nameVal ? 'green' : 'red'}`}> { this.state.errors.nameVal ? 'Name is valid!' : 'Name is invalid' } </small>
+                <small className={`form-text text-muted ${this.state.errors.fName ? '' : 'green'}`}> {this.state.errors.fName ? '' : 'Name is valid' } </small>
               </div>
               <div className="col-5 checkout-field">
                 <input
@@ -152,7 +150,7 @@ export default class Checkout extends React.Component {
                   value={this.state.name}
                   onChange={this.handleChange}
                 />
-                <small className={`form-text text-muted ${this.state.errors.nameVal ? 'green' : 'red'}`}> {this.state.errors.nameVal ? 'Name is valid!' : 'Name is invalid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.lName ? '' : 'green'}`}> {this.state.errors.lName ? '' : 'Name is valid'} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -164,7 +162,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.address}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
+                <small className={`form-text text-muted ${this.state.errors.street ? '' : 'green'}`}> {this.state.errors.street ? '' : 'Name is valid'} </small>
               </div>
               <div className="col-5 checkout-field">
                 <input
@@ -174,7 +172,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.address}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
+                <small className={`form-text text-muted ${this.state.errors.city ? '' : 'green'}`}> {this.state.errors.city ? '' : 'Name is valid'} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -186,7 +184,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.address}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
+                <small className={`form-text text-muted ${this.state.errors.state ? '' : 'green'}`}> {this.state.errors.state ? '' : 'Name is valid'} </small>
               </div>
               <div className="col-3 checkout-field">
                 <input
@@ -196,7 +194,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.address}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.addressVal ? 'green' : 'red'}`}> {this.state.errors.addressVal ? 'Address entry is valid' : 'Address entry is required'} </small>
+                <small className={`form-text text-muted ${this.state.errors.zip ? '' : 'green'}`}> {this.state.errors.zip ? '' : 'Name is valid'} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -211,7 +209,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.creditCard}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.fullName ? '' : 'green'}`}> {this.state.errors.fullName ? '' : 'Name is valid'} </small>
               </div>
               <div className="col-5 checkout-field">
                 <input
@@ -221,7 +219,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.creditCard}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.creditCardNumber ? '' : 'green'}`}> {this.state.errors.creditCardNumber ? '' : 'Name is valid'} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -233,7 +231,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.creditCard}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.expiration ? '' : 'green'}`}> {this.state.errors.expiration ? '' : 'Name is valid'} </small>
               </div>
               <div className="col-3 checkout-field">
                 <input
@@ -243,7 +241,7 @@ export default class Checkout extends React.Component {
                   className="form-control"
                   value={this.state.creditCard}
                   onChange={this.handleChange} />
-                <small className={`form-text text-muted ${this.state.errors.creditCardVal ? 'green' : 'red'}`}> {this.state.errors.creditCardVal ? 'Credit card entry is valid!' : 'Credit card entry is invalid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.cvv ? '' : 'green'}`}> {this.state.errors.cvv ? '' : 'Name is valid'} </small>
               </div>
             </div>
             <div className="row mt-2">
