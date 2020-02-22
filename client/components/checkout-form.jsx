@@ -16,8 +16,8 @@ export default class Checkout extends React.Component {
       expiration: '',
       cvv: '',
       errors: {
-        fName: true,
-        lName: true,
+        fName: false,
+        lName: false,
         street: true,
         city: true,
         state: true,
@@ -37,7 +37,6 @@ export default class Checkout extends React.Component {
     console.log('event', event);
     const name = event.target.name;
     const value = event.target.value;
-
     const errors = {...this.state.errors};
 
     switch (name) {
@@ -64,8 +63,6 @@ export default class Checkout extends React.Component {
     }
     console.log('value', value);
     console.log('name', name);
-
-    // this.setState({[name]: value});
     this.setState({ errors, [name]: value }, () => {
       console.log(errors);
     });
