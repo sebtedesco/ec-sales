@@ -18,7 +18,7 @@ export default class Checkout extends React.Component {
       errors: {
         fName: false,
         lName: false,
-        street: false,
+        street: true,
         city: false,
         state: false,
         zip: false,
@@ -43,32 +43,65 @@ export default class Checkout extends React.Component {
   };
 
   handleValidation(event) {
-    console.log('oh hi there');
     const name = event.target.name;
     const errors = { ...this.state.errors };
     const value = event.target.value;
 
+    const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
+    const streetRegex = new RegExp(/\d+\w+\s\w+\s\w+/);
+    const zipRegex = new RegExp(/^\d{5}(\-?\d{4})?$/);
+    // const fullNameRegex = new RegExp(/^(?:([a-zA-Z]{2,4}\.){0,1} ?([a-zA-Z]{2,24})) ([a-zA-Z]{1,1}  \. ){0,1}([a-zA-Z]{2,24} ){0,2}([A-Za-z']{2,24})((?:, ([a-zA-Z]{2,5}\.?)){0,4}?)$/im/);
+    const ccRegex = new RegExp(/(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g);
+    const mmyyRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
+    const cvvRegex = new RegExp(/^[0-9]{3,4}$/);
+
+
     switch (name) {
-      case 'fName': errors.fName = value.length > 1 ? false : true;
-      console.log('fName error', errors.fullName)
+      case 'fName':
+        if(!oneWordRegex.test(this.state[name])){
+          console.log('validation failed for: ', name)
+          this.setState(prevState => ({
+            validation: {
+              ...prevState.errors,
+              fName: true
+            }
+          }));
+          console.log('new fName state: ', this.state.errors.fName)
+        };
         break;
-      case 'lName': errors.lName = value.length < 1 ? false : true;
+      case 'lName':
+        if (!oneWordRegex.test(this.state[name])) {
+          this.setState(prevState => ({
+            validation: {
+              ...prevState.errors,
+              lName: true
+            }
+          }));
+        };;
         break;
-      case 'street': errors.street = value.length < 1 ? 'Street is required' : '';
+      case 'street':
+        if (!streetRegex.test(this.state[name])) {
+          this.setState(prevState => ({
+            validation: {
+              ...prevState.errors,
+              street: true
+            }
+          }));
+        };;
         break;
-      case 'city': errors.city = value.length < 1 ? 'City is required' : '';
+      case 'city': errors.city = value.length > 1 ? false : true;
         break;
-      case 'state': errors.state = value.length < 1 ? 'State is required' : '';
+      case 'state': errors.state = value.length > 1 ? false : true;
         break;
-      case 'zip': errors.zip = value.length < 1 ? 'Zip Code is required' : '';
+      case 'zip': errors.zip = value.length > 1 ? false : true;
         break;
-      case 'fullName': errors.fullName = value.length < 1 ? 'Full Name is required' : '';
+      case 'fullName': errors.fullName = value.length > 1 ? false : true;
         break;
-      case 'creditCardNumber': errors.creditCardNumber = value.length < 1 ? 'Credit card number is required' : '';
+      case 'creditCardNumber': errors.creditCardNumber = value.length > 1 ? false : true;
         break;
-      case 'expiration': errors.expiration = value.length < 1 ? 'Expiration date is required' : '';
+      case 'expiration': errors.expiration = value.length > 1 ? false : true;
         break;
-      case 'cvv': errors.cvv = value.length < 1 ? 'CVV is required' : '';
+      case 'cvv': errors.cvv = value.length > 1 ? false : true;
         break;
     }
 
@@ -156,7 +189,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.lName ? '' : 'green'}`}> {this.state.errors.lName ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.lName ? 'red' : ''}`}> {this.state.errors.lName ? 'Last name is invalid' : ''} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -171,7 +204,7 @@ export default class Checkout extends React.Component {
                   onBlur={this.handleValidation}
                 />
 
-                <small className={`form-text text-muted ${this.state.errors.street ? '' : 'green'}`}> { this.state.errors.street } </small>
+                <small className={`form-text text-muted ${this.state.errors.street ? 'red' : ''}`}> {this.state.errors.street ? 'Street is invalid' : ''} </small>
               </div>
               <div className="col-5 checkout-field">
                 <input
@@ -183,7 +216,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.city ? '' : 'green'}`}> {this.state.errors.city ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.city ? 'red' : ''}`}> {this.state.errors.city ? 'City is invalid' : ''} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -197,7 +230,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.state ? '' : 'green'}`}> {this.state.errors.state ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.state ? 'red' : ''}`}> {this.state.errors.state ? 'State is invalid' : ''} </small>
               </div>
               <div className="col-3 checkout-field">
                 <input
@@ -209,7 +242,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.zip ? '' : 'green'}`}> {this.state.errors.zip ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.zip ? 'red' : ''}`}> {this.state.errors.zip ? 'Zip Code is invalid' : ''} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -226,7 +259,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.fullName ? '' : 'green'}`}> {this.state.errors.fullName ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.fullName ? 'red' : ''}`}> {this.state.errors.fullName ? 'Full name is invalid' : ''} </small>
               </div>
               <div className="col-5 checkout-field">
                 <input
@@ -238,7 +271,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.creditCardNumber ? '' : 'green'}`}> {this.state.errors.creditCardNumber ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.creditCardNumber ? 'red' : ''}`}> {this.state.errors.creditCardNumber ? 'Credit card number is invalid' : ''} </small>
               </div>
             </div>
             <div className="row mt-2">
@@ -252,7 +285,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                 />
-                <small className={`form-text text-muted ${this.state.errors.expiration ? '' : 'green'}`}> {this.state.errors.expiration ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.expiration ? 'red' : ''}`}> {this.state.errors.expiration ? 'Expiration date is invalid' : ''} </small>
               </div>
               <div className="col-3 checkout-field">
                 <input
@@ -264,7 +297,7 @@ export default class Checkout extends React.Component {
                   onChange={this.handleChange}
                   onBlur={this.handleValidation}
                   />
-                <small className={`form-text text-muted ${this.state.errors.cvv ? '' : 'green'}`}> {this.state.errors.cvv ? '' : 'Name is valid'} </small>
+                <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
               </div>
             </div>
             <div className="row mt-2">
