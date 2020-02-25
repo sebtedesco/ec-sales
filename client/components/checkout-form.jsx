@@ -33,20 +33,22 @@ export default class Checkout extends React.Component {
   }
 
   handleChange(event) {
-    event.preventDefault();
-    // const { name, value } = event.target;
-    console.log('event', event);
     const name = event.target.name;
     const value = event.target.value;
-
-    this.setState({ [name]: value })
+    const errors = { ...this.state.errors };
+    errors[name] = false
+    this.setState({
+      [name]: value,
+      errors
+    })
+    console.log('error[name]: ', this.state.errors[name])
   };
 
   handleValidation(event) {
+    console.log('event', event.target.name)
     const name = event.target.name;
     const errors = { ...this.state.errors };
     const value = event.target.value;
-
     const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
     const streetRegex = new RegExp(/\d+\w+\s\w+\s\w+/);
     const zipRegex = new RegExp(/^\d{5}(\-?\d{4})?$/);
@@ -60,13 +62,10 @@ export default class Checkout extends React.Component {
       case 'fName':
         if(!oneWordRegex.test(this.state[name])){
           console.log('validation failed for: ', name)
-          this.setState(prevState => ({
-            validation: {
-              ...prevState.errors,
-              fName: true
-            }
-          }));
-          console.log('new fName state: ', this.state.errors.fName)
+          errors.fName = true;
+          this.setState({
+            errors
+          }, () => console.log('new fName state: ', this.state.errors.fName))
         };
         break;
       case 'lName':
@@ -107,48 +106,6 @@ export default class Checkout extends React.Component {
 
     this.setState({ errors });
   }
-
-  // handleNameChange(event) {
-  //   event.preventDefault();
-  //   const creditCardVal = this.state.errors.creditCardVal;
-  //   const addressVal = this.state.errors.creditCardVal;
-  //   const rules = /(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/g;
-  //   const isNameValid = rules.test(event.target.value);
-  //   const nameValCopy = { ...this.state.errors.nameVal };
-  //   nameValCopy.nameVal = isNameValid;
-  //   this.setState({
-  //     name: event.target.value,
-  //     errors: nameValCopy
-  //   });
-  // }
-
-  // handleCreditCardChange(event) {
-  //   event.preventDefault();
-  //   const nameVal = this.state.errors.nameVal;
-  //   const addressVal = this.state.errors.creditCardVal;
-  //   const rules = /(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g;
-  //   const isCreditCardValid = rules.test(event.target.value);
-  //   const creditCardValCopy = { ...this.state.errors.creditCardVal };
-  //   creditCardValCopy.creditCardVal = isCreditCardValid;
-  //   this.setState({
-  //     creditCard: event.target.value,
-  //     errors: creditCardValCopy
-  //   });
-  // }
-
-  // handleAddressChange(event) {
-  //   event.preventDefault();
-  //   const creditCardVal = this.state.errors.nameVal;
-  //   const nameVal = this.state.errors.nameVal;
-  //   const rules = /./;
-  //   const isAddressValid = rules.test(event.target.value);
-  //   const addressValCopy = { ...this.state.errors.addressVal };
-  //   addressValCopy.addressVal = isAddressValid;
-  //   this.setState({
-  //     address: event.target.value,
-  //     errors: addressValCopy
-  //   });
-  // }
 
   render() {
     const arrOfCartItems = this.props.cart;
