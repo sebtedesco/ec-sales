@@ -18,7 +18,7 @@ export default class Checkout extends React.Component {
       errors: {
         fName: false,
         lName: false,
-        street: true,
+        street: false,
         city: false,
         state: false,
         zip: false,
@@ -41,69 +41,84 @@ export default class Checkout extends React.Component {
       [name]: value,
       errors
     })
-    console.log('error[name]: ', this.state.errors[name])
   };
 
   handleValidation(event) {
-    console.log('event', event.target.name)
     const name = event.target.name;
+    console.log('name: ', name)
     const errors = { ...this.state.errors };
     const value = event.target.value;
     const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
     const streetRegex = new RegExp(/\d+\w+\s\w+\s\w+/);
     const zipRegex = new RegExp(/^\d{5}(\-?\d{4})?$/);
-    // const fullNameRegex = new RegExp(/^(?:([a-zA-Z]{2,4}\.){0,1} ?([a-zA-Z]{2,24})) ([a-zA-Z]{1,1}  \. ){0,1}([a-zA-Z]{2,24} ){0,2}([A-Za-z']{2,24})((?:, ([a-zA-Z]{2,5}\.?)){0,4}?)$/im/);
+    const fullNameRegex = new RegExp(/(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/)
     const ccRegex = new RegExp(/(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g);
-    const mmyyRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
+    const expRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
     const cvvRegex = new RegExp(/^[0-9]{3,4}$/);
-
 
     switch (name) {
       case 'fName':
+      case 'lName':
+      case 'city':
+      case 'state':
         if(!oneWordRegex.test(this.state[name])){
-          console.log('validation failed for: ', name)
-          errors.fName = true;
+          console.log('yep')
+          errors[name] = true;
           this.setState({
             errors
-          }, () => console.log('new fName state: ', this.state.errors.fName))
+          })
+          console.log('name: ', name)
+          console.log('error state: ', errors[name])
         };
-        break;
-      case 'lName':
-        if (!oneWordRegex.test(this.state[name])) {
-          this.setState(prevState => ({
-            validation: {
-              ...prevState.errors,
-              lName: true
-            }
-          }));
-        };;
         break;
       case 'street':
         if (!streetRegex.test(this.state[name])) {
-          this.setState(prevState => ({
-            validation: {
-              ...prevState.errors,
-              street: true
-            }
-          }));
-        };;
+          errors.street = true;
+          this.setState({
+            errors
+          })
+        };
         break;
-      case 'city': errors.city = value.length > 1 ? false : true;
+      case 'zip':
+        if (!zipRegex.test(this.state[name])) {
+          errors.zip = true;
+          this.setState({
+            errors
+          })
+        };
         break;
-      case 'state': errors.state = value.length > 1 ? false : true;
+      case 'fullName':
+        if (!fullNameRegex.test(this.state[name])) {
+          errors.fullName = true;
+          this.setState({
+            errors
+          })
+        };
         break;
-      case 'zip': errors.zip = value.length > 1 ? false : true;
+      case 'creditCardNumber':
+        if (!ccRegex.test(this.state[name])) {
+          errors.creditCardNumber = true;
+          this.setState({
+            errors
+          })
+        };
         break;
-      case 'fullName': errors.fullName = value.length > 1 ? false : true;
+      case 'expiration':
+        if (!expRegex.test(this.state[name])) {
+          errors.expiration = true;
+          this.setState({
+            errors
+          })
+        };
         break;
-      case 'creditCardNumber': errors.creditCardNumber = value.length > 1 ? false : true;
-        break;
-      case 'expiration': errors.expiration = value.length > 1 ? false : true;
-        break;
-      case 'cvv': errors.cvv = value.length > 1 ? false : true;
-        break;
+      case 'cvv':
+        if (!cvvRegex.test(this.state[name])) {
+          errors.cvv = true;
+          this.setState({
+            errors
+          })
+        };
     }
-
     this.setState({ errors });
   }
 
