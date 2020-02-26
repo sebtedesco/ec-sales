@@ -48,6 +48,13 @@ export default class Checkout extends React.Component {
     console.log('name: ', name)
     const errors = { ...this.state.errors };
     const value = event.target.value;
+    const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
+    const streetRegex = new RegExp(/\d+\w+\s\w+\s\w+/);
+    const zipRegex = new RegExp(/^\d{5}(\-?\d{4})?$/);
+    const fullNameRegex = new RegExp(/(?:(\w+-?\w+)) (?:(\w+))(?: (\w+))?$/)
+    const ccRegex = new RegExp(/(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g);
+    const expRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
+    const cvvRegex = new RegExp(/^[0-9]{3,4}$/);
 
     switch (name) {
       case 'fName':
