@@ -1,14 +1,9 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
+import BottomNav from './bottom-nav';
 
 export default function CartSummary(props) {
-
   const arrOfCartItems = props.cart;
-  let totalPrice = null;
-  arrOfCartItems.forEach(item => {
-    totalPrice += item.price;
-  });
-  const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
   if (arrOfCartItems.length === 0) {
     return (
       <>
@@ -42,12 +37,10 @@ export default function CartSummary(props) {
           </div>
         </div>
       </div>
-      <div className="container-fluid">
-        <div className="bottom-nav row justify-content-between">
-          <p className="col order-total">Cart Total: {totalPriceFormatted}</p>
-          <button type="button" className="btn btn-primary mr-5" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
-        </div>
-      </div>
+      <BottomNav
+        setView={props.setViewMethod}
+        cart={props.cart}
+      />
     </>
   );
 }
