@@ -1,5 +1,6 @@
 /* eslint-disable */
 import React from 'react';
+import BottomNav from './bottom-nav'
 
 export default class Checkout extends React.Component {
   constructor(props) {
@@ -272,14 +273,16 @@ export default class Checkout extends React.Component {
                 <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
               </div>
             </div>
-            <div className="row mt-2">
-              <button onClick={e => {
+            <BottomNav
+              setView={this.props.setViewMethod}
+              cart={this.props.cart}
+              onClick={e => {
                 e.preventDefault();
-                this.props.placeOrder(this.state);
-              }} className="btn btn-primary">Submit</button>
-            </div>
+                this.props.placeOrder(this.state)
+                }
+              }
+            />
           </div>
-          <div className="col-4">Summary</div>
         </div>
       </div>
     );

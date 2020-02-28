@@ -69,6 +69,7 @@ export default class App extends React.Component {
   }
 
   placeOrder(orderObject) {
+    // console.log('order placed: ', orderObject)
     if (!orderObject.name || !orderObject.creditCard || !orderObject.address) {
       return console.error('one or more fields missing');
     }
