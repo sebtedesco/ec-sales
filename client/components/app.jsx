@@ -69,7 +69,7 @@ export default class App extends React.Component {
   }
 
   placeOrder(orderObject) {
-    // console.log('order placed: ', orderObject)
+    // console.log('order placed: ', orderObject);
     if (!orderObject.name || !orderObject.creditCard || !orderObject.address) {
       return console.error('one or more fields missing');
     }
@@ -91,15 +91,21 @@ export default class App extends React.Component {
   }
 
   render() {
+    const arrOfCartItems = this.state.cart;
+    let totalPrice = null;
+    arrOfCartItems.forEach(item => {
+      totalPrice += item.price;
+    });
+    const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     let reactElementToDisplay = null;
     if (this.state.view.name === 'catalog') {
       reactElementToDisplay = <ProductList setViewMethod={this.setView} />;
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
-      reactElementToDisplay = <CartSummary cart={this.state.cart} setViewMethod={this.setView} />;
+      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} setViewMethod={this.setView} />;
     } else if (this.state.view.name === 'checkout') {
-      reactElementToDisplay = <Checkout placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
+      reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
     }
     return (
       <>

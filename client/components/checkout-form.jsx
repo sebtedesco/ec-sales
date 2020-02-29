@@ -273,15 +273,12 @@ export default class Checkout extends React.Component {
                 <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
               </div>
             </div>
-            <BottomNav
-              setView={this.props.setViewMethod}
-              cart={this.props.cart}
-              onClick={e => {
-                e.preventDefault();
-                this.props.placeOrder(this.state)
-                }
-              }
-            />
+            <div className="container-fluid">
+              <div className="bottom-nav row justify-content-between">
+                <p className="col order-total">Cart Total: {this.props.totalPrice}</p>
+                <button type="button" className="btn btn-primary mr-5" onClick={() => { this.props.placeOrder(this.props.cart); this.props.setViewMethod('catalog', {})}}>Place Order</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
