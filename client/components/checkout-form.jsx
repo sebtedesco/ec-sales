@@ -63,7 +63,6 @@ export default class Checkout extends React.Component {
       case 'city':
       case 'state':
         if(!oneWordRegex.test(this.state[name])){
-          console.log('yep')
           errors[name] = true;
           this.setState({
             errors

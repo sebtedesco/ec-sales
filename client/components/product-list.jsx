@@ -42,6 +42,11 @@ export default class ProductList extends React.Component {
             })
           }
         </div>
+        {/* <div className="welcome-modal">
+          <p>By clicking the below, you understand that this site is for educational purposes only</p>
+          <button type="button" class="btn btn-danger">Proceed</button>
+
+        </div> */}
       </div>
     );
   }
