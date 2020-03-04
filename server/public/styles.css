@@ -66,3 +66,24 @@
   background-color: white;
   border-top: 1px solid grey;
 }
+
+.consent-modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50%;
+  width: 50%;
+  top: 25%;
+  left: 25%;
+  padding: 12px;
+  background: white;
+  border: 3px solid black;
+  z-index: 1;
+}
+
+.modal-background {
+  z-index: 1;
+  background-color: rgba(0,0,0,0,.4);
+}
