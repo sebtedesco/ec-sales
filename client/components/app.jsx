@@ -4,6 +4,7 @@ import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import Checkout from './checkout-form';
+import ConsentModal from './consent-modal';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,12 +16,16 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      firstVisit: true
     };
 
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
+    this.showConsentModal = this.showConsentModal.bind(this);
+    this.hideConsentModal = this.hideConsentModal.bind(this);
+
   }
 
   componentDidMount() {
@@ -31,6 +36,17 @@ export default class App extends React.Component {
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
 
+  }
+
+  showConsentModal() {
+    if (this.state.firstVisit) {
+      return <ConsentModal hideConsentModal={this.hideConsentModal}/>;
+    }
+
+  }
+
+  hideConsentModal() {
+    this.setState({ firstVisit: false });
   }
 
   setView(setViewName, setViewParams) {
@@ -100,7 +116,7 @@ export default class App extends React.Component {
     const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     let reactElementToDisplay = null;
     if (this.state.view.name === 'catalog') {
-      reactElementToDisplay = <ProductList setViewMethod={this.setView} />;
+      reactElementToDisplay = <ProductList setViewMethod={this.setView} firstVisit={this.state.firstVisit} />;
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
@@ -110,6 +126,7 @@ export default class App extends React.Component {
     }
     return (
       <>
+        {this.showConsentModal()}
         <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView}/>
         { reactElementToDisplay }
       </>
