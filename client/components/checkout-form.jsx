@@ -27,7 +27,8 @@ export default class Checkout extends React.Component {
         creditCardNumber: false,
         expiration: false,
         cvv: false
-      }
+      },
+      errorFree: false
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleValidation = this.handleValidation.bind(this);
@@ -120,6 +121,13 @@ export default class Checkout extends React.Component {
         };
     }
     this.setState({ errors });
+    this.errorFree();
+  }
+
+  errorFree(){
+    if(!this.state.errors.fName && !this.state.errors.lName && !this.state.errors.street && !this.state.errors.city && !this.state.errors.state && !this.state.errors.zip && !this.state.errors.fullName && !this.state.errors.creditCardNumber && !this.state.errors.expiration && !this.state.errors.cvv) {
+      this.setState({ errorFree: true });
+    }
   }
 
   render() {
@@ -276,7 +284,7 @@ export default class Checkout extends React.Component {
                 <p><input type="checkbox" name="terms" />  I understand that by clicking "Place Order" I am not placing an order.</p>
               </div>
             </div>
-            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod}/>
+            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree}/>
           </div>
         </div>
       </div>
