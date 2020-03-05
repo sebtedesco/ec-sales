@@ -134,7 +134,6 @@ export default class Checkout extends React.Component {
         <div className="row m-0">
           <div className="col col-8">
             <h2>My Cart</h2>
-            <p className="order-total">{`Order Total: ${totalPriceFormatted}`}</p>
             <div className="row">
               <h4 className="m-3">Shipping Information</h4>
             </div>
@@ -272,12 +271,12 @@ export default class Checkout extends React.Component {
                 <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
               </div>
             </div>
-            <div className="container-fluid">
-              <div className="bottom-nav row justify-content-between">
-                <p className="col order-total">Cart Total: {this.props.totalPrice}</p>
-                <button type="button" className="btn btn-primary mr-5" onClick={() => { this.props.placeOrder(this.props.cart); this.props.setViewMethod('catalog', {})}}>Place Order</button>
+            <div className="row mt-4">
+              <div className="col-12">
+                <p><input type="checkbox" name="terms" />  I understand that by clicking "Place Order" I am not placing an order.</p>
               </div>
             </div>
+            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod}/>
           </div>
         </div>
       </div>
