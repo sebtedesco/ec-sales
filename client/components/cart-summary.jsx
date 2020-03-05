@@ -1,5 +1,6 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
+import BottomNav from './bottom-nav';
 
 export default function CartSummary(props) {
   const arrOfCartItems = props.cart;
@@ -36,12 +37,7 @@ export default function CartSummary(props) {
           </div>
         </div>
       </div>
-      <div className="container-fluid">
-        <div className="bottom-nav row justify-content-between">
-          <p className="col order-total">Cart Total: {props.totalPrice}</p>
-          <button type="button" className="btn btn-primary mr-5" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
-        </div>
-      </div>
+      <BottomNav cart={props.cart} view={props.view} setViewMethod={props.setViewMethod}/>
     </>
   );
 }

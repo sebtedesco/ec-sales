@@ -5,6 +5,7 @@ import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import Checkout from './checkout-form';
 import ConsentModal from './consent-modal';
+import Confirmation from './confirmation-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -120,9 +121,11 @@ export default class App extends React.Component {
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
-      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} setViewMethod={this.setView} />;
+      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} />;
     } else if (this.state.view.name === 'checkout') {
-      reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
+      reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} view={this.state.view.name} setViewMethod={this.setView} cart={this.state.cart} />;
+    } else if (this.state.view.name === 'confirmation') {
+      reactElementToDisplay = <Confirmation view={this.state.view.name} cart={this.state.cart} setViewMethod={this.setView}/>;
     }
     return (
       <>
