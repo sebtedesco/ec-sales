@@ -7,7 +7,7 @@ export default function Confirmation(props) {
     <>
       {/* <p>Thanks for placeing a fake order!</p> */}
       <CartSummary cart={props.cart}/>;
-      <BottomNav cart={props.cart} view={props.view}/>;
+      <BottomNav cart={props.cart} view={props.view} setViewMethod={props.setViewMethod}/>;
     </>
   );
 }

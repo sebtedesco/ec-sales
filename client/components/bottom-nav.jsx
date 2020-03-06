@@ -8,8 +8,6 @@ export default function BottomNav(props) {
   });
   const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
   const currentView = props.view;
-  // const carView = 'Checkout';
-  // const confirmationView = 'Go Home';
   let setView;
   let buttonText;
   let totalText;
@@ -32,11 +30,26 @@ export default function BottomNav(props) {
       break;
   }
 
+  // console.log('setView: ', setView);
+  // console.log('buttonText: ', buttonText);
+  // console.log('totalText: ', totalText);
+
+  function buttonClicked() {
+    if (setView === 'confirmation') {
+      if (props.errorFree) {
+        return () => props.setViewMethod(setView, {});
+      } else {
+        return;
+      }
+    }
+    return () => props.setViewMethod(setView, {});
+  }
+
   return (
     <div className="container-fluid">
       <div className="bottom-nav row justify-content-between">
         <p className="col order-total">{totalText} {totalPriceFormatted}</p>
-        <button type="button" className="btn btn-primary mr-5" onClick={() => props.setViewMethod(setView, {})}>{buttonText}</button>
+        <button type="button" className="btn btn-primary mr-5" onClick={buttonClicked()}>{buttonText}</button>
       </div>
     </div>
   );
