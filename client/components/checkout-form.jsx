@@ -35,6 +35,7 @@ export default class Checkout extends React.Component {
   }
 
   handleChange(event) {
+    event.preventDefault();
     const name = event.target.name;
     const value = event.target.value;
     const errors = { ...this.state.errors };
@@ -288,7 +289,7 @@ export default class Checkout extends React.Component {
                 <p><input type="checkbox" name="terms" />  I understand that by clicking "Place Order" I am not placing an order.</p>
               </div>
             </div>
-            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree}/>
+            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree} placeOrder={this.props.placeOrder}/>
           </div>
         </div>
       </div>
