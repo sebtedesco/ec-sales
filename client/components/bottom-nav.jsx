@@ -30,23 +30,19 @@ export default function BottomNav(props) {
       break;
   }
 
-  // console.log('setView: ', setView);
-  // console.log('buttonText: ', buttonText);
-  // console.log('totalText: ', totalText);
-
   function buttonClicked() {
-    // console.log('props.cart: ', props.cart)
+    // console.log('setView: ', setView);
+    // console.log('buttonText: ', buttonText);
+    // console.log('totalText: ', totalText);
     if (setView === 'confirmation') {
       if (props.errorFree) {
-        // console.log('1')
-        props.setViewMethod(setView, {});
-        props.placeOrder(props.cart[0]);
+        props.placeOrder(props.orderDetails);
+        // props.setViewMethod(setView, {});
+        return;
       } else {
-        // console.log('2')
         return;
       }
     }
-    // console.log('3')
     props.setViewMethod(setView, {});
   }
 
