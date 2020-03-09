@@ -48,7 +48,7 @@ export default class Checkout extends React.Component {
 
   handleValidation(event) {
     const name = event.target.name;
-    console.log('name: ', name)
+    // console.log('name: ', name)
     const errors = { ...this.state.errors };
     const value = event.target.value;
     const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
@@ -69,8 +69,8 @@ export default class Checkout extends React.Component {
           this.setState({
             errors
           })
-          console.log('name: ', name)
-          console.log('error state: ', errors[name])
+          // console.log('name: ', name)
+          // console.log('error state: ', errors[name])
         };
         break;
       case 'street':
@@ -289,7 +289,7 @@ export default class Checkout extends React.Component {
                 <p><input type="checkbox" name="terms" />  I understand that by clicking "Place Order" I am not placing an order.</p>
               </div>
             </div>
-            <BottomNav cart={this.props.cart} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree} placeOrder={this.props.placeOrder}/>
+            <BottomNav cart={this.props.cart} orderDetails={this.state} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree} placeOrder={this.props.placeOrder}/>
           </div>
         </div>
       </div>
