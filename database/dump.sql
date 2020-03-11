@@ -21,12 +21,14 @@ ALTER TABLE ONLY public.orders DROP CONSTRAINT orders_pkey;
 ALTER TABLE ONLY public.carts DROP CONSTRAINT carts_pkey;
 ALTER TABLE ONLY public."cartItems" DROP CONSTRAINT "cartItems_pkey";
 ALTER TABLE public.products ALTER COLUMN "productId" DROP DEFAULT;
+ALTER TABLE public.orders ALTER COLUMN "fName" DROP DEFAULT;
 ALTER TABLE public.orders ALTER COLUMN "orderId" DROP DEFAULT;
 ALTER TABLE public.carts ALTER COLUMN "cartId" DROP DEFAULT;
 ALTER TABLE public."cartItems" ALTER COLUMN "cartItemId" DROP DEFAULT;
 DROP SEQUENCE public."products_productId_seq";
 DROP TABLE public.products;
 DROP SEQUENCE public."orders_orderId_seq";
+DROP SEQUENCE public."orders_fName_seq";
 DROP TABLE public.orders;
 DROP SEQUENCE public."carts_cartId_seq";
 DROP TABLE public.carts;
@@ -135,11 +137,38 @@ ALTER SEQUENCE public."carts_cartId_seq" OWNED BY public.carts."cartId";
 CREATE TABLE public.orders (
     "orderId" integer NOT NULL,
     "cartId" integer NOT NULL,
-    name text NOT NULL,
-    "creditCard" text NOT NULL,
-    "shippingAddress" text NOT NULL,
-    "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL
+    "createdAt" timestamp(6) with time zone DEFAULT now() NOT NULL,
+    "fName" text NOT NULL,
+    "lName" text NOT NULL,
+    street text NOT NULL,
+    city text NOT NULL,
+    state text NOT NULL,
+    zip integer NOT NULL,
+    "fullName" text NOT NULL,
+    "creditCardNumber" text NOT NULL,
+    expiration text NOT NULL,
+    cvv integer NOT NULL
 );
+
+
+--
+-- Name: orders_fName_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public."orders_fName_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: orders_fName_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public."orders_fName_seq" OWNED BY public.orders."fName";
 
 
 --
@@ -170,6 +199,7 @@ CREATE TABLE public.products (
     "productId" integer NOT NULL,
     name text NOT NULL,
     price integer NOT NULL,
+    details text NOT NULL,
     image text NOT NULL,
     "shortDescription" text NOT NULL,
     "longDescription" text NOT NULL
@@ -215,6 +245,13 @@ ALTER TABLE ONLY public.carts ALTER COLUMN "cartId" SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.orders ALTER COLUMN "orderId" SET DEFAULT nextval('public."orders_orderId_seq"'::regclass);
+
+
+--
+-- Name: orders fName; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.orders ALTER COLUMN "fName" SET DEFAULT nextval('public."orders_fName_seq"'::regclass);
 
 
 --
@@ -304,6 +341,107 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 80	86	2	2595
 81	86	2	2595
 82	87	2	2595
+83	88	1	2999
+84	88	3	2900
+85	88	2	2595
+86	88	1	2999
+87	88	5	9900
+88	89	2	2595
+89	89	3	2900
+90	89	1	2999
+91	89	2	2595
+92	89	1	2999
+93	89	1	2999
+94	89	2	2595
+95	89	3	2900
+96	89	2	2595
+97	90	3	2900
+98	90	2	2595
+99	90	3	2900
+100	90	1	2999
+101	90	1	2999
+102	91	1	2999
+103	91	1	2999
+104	91	5	9900
+105	91	3	2900
+106	91	1	2999
+107	92	6	830
+108	92	2	2595
+109	92	3	2900
+110	92	6	830
+111	92	4	999
+112	92	5	9900
+113	92	2	2595
+114	93	3	2900
+115	93	2	2595
+116	93	3	2900
+117	93	3	2900
+118	94	2	2595
+119	95	3	2900
+120	96	3	2900
+121	97	2	2595
+122	98	3	2900
+123	99	2	2595
+124	100	3	2900
+125	101	2	2595
+126	102	3	2900
+127	103	5	9900
+128	104	1	2999
+129	105	3	2900
+130	106	3	2900
+131	107	3	2900
+132	108	2	2595
+133	109	3	2900
+134	110	2	2595
+135	111	3	2900
+136	111	6	830
+137	112	2	2595
+138	113	3	2900
+139	114	2	2595
+140	114	2	2595
+141	114	2	2595
+142	114	2	2595
+143	115	1	2999
+144	115	3	2900
+145	116	2	2595
+146	116	3	2900
+147	116	3	2900
+148	117	3	2900
+149	117	2	2595
+150	118	3	2900
+151	118	2	2595
+152	119	2	2595
+153	120	2	2595
+154	121	1	2999
+155	122	1	2999
+156	122	2	2595
+157	122	2	2595
+158	122	2	2595
+159	122	1	2999
+160	122	3	2900
+161	122	2	2595
+162	123	3	2900
+163	123	2	2595
+164	123	3	2900
+165	123	2	2595
+166	124	1	2999
+167	125	2	2595
+168	125	3	2900
+169	126	2	2595
+170	127	2	2595
+171	127	1	2999
+172	127	1	2999
+173	128	1	2999
+174	129	1	2999
+175	129	3	2900
+176	130	3	2900
+177	131	3	2900
+178	132	2	2595
+179	133	2	2595
+180	134	3	2900
+181	135	2	2595
+182	136	3	2900
+183	137	2	2595
 \.
 
 
@@ -312,15 +450,10 @@ COPY public."cartItems" ("cartItemId", "cartId", "productId", price) FROM stdin;
 --
 
 COPY public.carts ("cartId", "createdAt") FROM stdin;
-1	2020-01-16 01:12:03.683845+00
 2	2020-01-16 01:15:35.884159+00
 3	2020-01-16 01:15:49.426515+00
-4	2020-01-16 01:17:34.722712+00
-5	2020-01-16 01:20:36.189178+00
 6	2020-01-16 01:20:53.113253+00
-7	2020-01-16 01:25:41.797559+00
 8	2020-01-16 01:30:15.699996+00
-9	2020-01-16 01:31:09.728158+00
 10	2020-01-16 01:32:50.107135+00
 11	2020-01-16 01:33:18.92093+00
 12	2020-01-16 01:34:03.628731+00
@@ -366,7 +499,6 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 52	2020-01-16 07:29:09.736466+00
 53	2020-01-16 07:30:29.829205+00
 54	2020-01-16 07:31:23.787421+00
-55	2020-01-16 07:33:03.498873+00
 56	2020-01-16 07:34:13.72149+00
 57	2020-01-16 07:36:22.713548+00
 58	2020-01-16 07:41:09.662952+00
@@ -399,6 +531,52 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 85	2020-01-21 03:26:37.789501+00
 86	2020-01-22 19:23:40.116028+00
 87	2020-02-05 20:06:46.568198+00
+88	2020-02-06 23:23:21.693426+00
+92	2020-02-12 18:54:58.505457+00
+94	2020-02-17 21:53:49.895498+00
+95	2020-02-17 21:54:23.375345+00
+96	2020-02-17 21:55:12.461013+00
+97	2020-02-17 22:03:15.336981+00
+98	2020-02-17 22:03:34.305909+00
+99	2020-02-17 22:03:49.248327+00
+100	2020-02-17 22:05:34.306414+00
+101	2020-02-17 22:08:19.447274+00
+102	2020-02-17 22:08:43.963669+00
+103	2020-02-17 22:10:22.652227+00
+104	2020-02-17 22:14:21.055402+00
+105	2020-02-17 22:17:33.846128+00
+106	2020-02-17 22:20:02.423372+00
+107	2020-02-17 22:22:03.581982+00
+108	2020-02-17 22:22:24.271904+00
+109	2020-02-17 22:25:39.2255+00
+110	2020-02-17 22:26:12.248044+00
+111	2020-02-17 22:33:54.334788+00
+112	2020-02-17 22:36:19.055264+00
+113	2020-02-17 22:36:37.025226+00
+114	2020-02-17 23:15:42.382518+00
+115	2020-02-20 19:55:02.294764+00
+116	2020-02-21 21:05:45.154065+00
+117	2020-02-24 18:46:16.056016+00
+118	2020-02-27 20:23:05.619453+00
+119	2020-02-28 21:35:42.402064+00
+120	2020-02-29 18:45:54.74289+00
+121	2020-03-02 23:37:20.919392+00
+122	2020-03-04 21:55:09.583987+00
+123	2020-03-05 17:25:40.578754+00
+124	2020-03-06 20:06:09.066932+00
+125	2020-03-08 03:03:20.450493+00
+126	2020-03-09 01:16:07.878648+00
+127	2020-03-09 18:30:39.699976+00
+128	2020-03-09 20:27:17.264286+00
+129	2020-03-09 20:31:24.311845+00
+130	2020-03-09 20:32:06.374755+00
+131	2020-03-09 20:35:07.255327+00
+132	2020-03-09 20:36:22.885169+00
+133	2020-03-09 20:37:26.985074+00
+134	2020-03-09 20:39:43.843509+00
+135	2020-03-09 20:39:45.261794+00
+136	2020-03-09 20:40:28.181508+00
+137	2020-03-09 20:40:41.754355+00
 \.
 
 
@@ -406,7 +584,15 @@ COPY public.carts ("cartId", "createdAt") FROM stdin;
 -- Data for Name: orders; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", "createdAt") FROM stdin;
+COPY public.orders ("orderId", "cartId", "createdAt", "fName", "lName", street, city, state, zip, "fullName", "creditCardNumber", expiration, cvv) FROM stdin;
+26	127	2020-03-09 20:03:36.661245+00	sebastian	tedesco	123 apple way	boulder	co	80304	seb tedesco	123123123123123123	12/12	123
+27	127	2020-03-09 20:10:40.617562+00	qwe	sdf	123 wer 123	boulder	co	80303	sdf sdf	123123123123123	12/12	345
+28	127	2020-03-09 20:19:06.931237+00	sdf	asdf	123 sdf 123	boulder	co	80303	asdf asdf	123123123123123	12/12	234
+29	127	2020-03-09 20:23:31.981983+00	sdf	sdf	123 sdf sdf	boulder	co	80303	sdf sdf	123123123123123123	12/12	323
+30	127	2020-03-09 20:25:43.49309+00	sdf	sdf	123 sdf wqqe	boulder	co	80300	sdf sdf	213123123123123132	12/12	234
+31	129	2020-03-09 20:31:47.472764+00	sdf	qwe	123 sdf 213	boulder	co	80303	sdf sdf	123123123123123123	12/12	345
+32	130	2020-03-09 20:32:28.354178+00	sdf	sdf	123 sdf 123	bouder	co	8002	sdf sdf	123123123123123123123	12/12	345
+33	135	2020-03-09 20:40:03.092191+00	sdf	sdfg	123 sdf 213	boulder	co	80303	sdf sdf	123123123123123	12/12	345
 \.
 
 
@@ -414,13 +600,16 @@ COPY public.orders ("orderId", "cartId", name, "creditCard", "shippingAddress", 
 -- Data for Name: products; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-COPY public.products ("productId", name, price, image, "shortDescription", "longDescription") FROM stdin;
-1	Shake Weight	2999	/images/shake-weight.jpg	Dynamic Inertia technology ignites muscles in arms, shoulders, and chest.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-2	ShamWow	2595	/images/shamwow.jpg	It's like a chamois, towel, and sponge, all in one! Soaks up to 10x it's weight in any liquid!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-3	Snuggie	2900	/images/snuggie.jpg	Super-Soft Fleece with pockets! One Size fits all Adults! Keeps you Warm & Your Hands-Free!	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-4	Wax Vac	999	/images/wax-vac.jpg	Gentle way to remove ear wax. Safe and hygienic. Reduces the risk of painful infections.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-5	Ostrich Pillow	9900	/images/ostrich-pillow.jpg	Create your own snugly space in the world and feel-good anywhere with the ultimate cocoon pillow.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
-6	Tater Mitts	830	/images/tater-mitts.jpg	8 Seconds is all you need with Tater Mitts. Quickly and easily prepare all your favorite potato dishes with Tater Mitts.	Lorem ipsum dolor amet fashion axe pour-over jianbing, adaptogen waistcoat tacos master cleanse pitchfork next level. Thundercats pour-over chartreuse 90's. Master cleanse hot chicken ennui offal. Freegan slow-carb offal hell of. Umami polaroid wolf slow-carb next level. Gentrify cardigan seitan, kombucha tacos chambray roof party typewriter man braid. Tote bag lo-fi hell of chia fam hammock\\n.Aesthetic photo booth la croix, vaporware leggings biodiesel man braid tumeric skateboard tousled slow-carb four dollar toast synth pabst pickled. Typewriter church-key chia slow-carb vice gochujang actually. Shoreditch austin woke hot chicken, single-origin coffee ugh affogato four loko green juice. Migas iPhone four dollar toast mustache.
+COPY public.products ("productId", name, price, details, image, "shortDescription", "longDescription") FROM stdin;
+1	Eric Clapton Guitar Pick	1499	Quantity: 1	/images/pick.png	Eric Clapton Guitar Pick 1994	This Eric Clapton Guitar pick is from a solo acoustic concert put on by Clapton to benefit the T.J. Martell Foundation. The concert was held at the Avery Fisher Hall in New York’s Lincoln Centre on Monday May 2,1994. This Is a yellow pick with gold print on both sides. Featured on the front are the initials “EC” printed in gold. The back has “FROM THE CRADLE” printed in gold. This pick was gotten from this show.\nWonderful item for the collector.
+2	Eric Clapton Poster	1999	Dimensions: 12 1/2"  x 17"	/images/poster.png	Eric Clapton Original Concert Poster	Eric Clapton is the only three-time inductee to the Rock and Roll Hall of Fame: once as a solo artist and separately as a member of the Yardbirds and of Cream. Clapton has been referred to as one of the most important and influential guitarists of all time. Clapton ranked second in Rolling Stone's list of the "100 Greatest Guitarists of All Time" and fourth in Gibson's "Top 50 Guitarists of All Time". He was also named number five in Time magazine's list of "The 10 Best Electric Guitar Players" in 2009.
+3	Eric Clapton Signed Guitar	300000	Color: Red	/images/guitar.png	Eric Clapton Autographed Blackie Style Guitar	This is an electric guitar that has been hand-signed by Eric Clapton. The signature has been certified authentic by an independent third party authenticator and will come with a Certificate of Authenticity. Each COA has a unique serial number which can used to verify authenticity at anytime. The guitar is full sized and fully functional.
+4	Eric Clapton Framed Display	12900	Dimensions: 15″ x 24″	/images/platinum.png	Eric Clapton Money Cherry Wood Gold LP Record Framed Signature Display	This framed item will be a welcomed addition to any collection.  This large 15″ x 24″ framed item comes with “non breakable” framers grade acrylic. Known as museum glass due to the UV protection, to hinder fading of colors, and its ability to not shatter during stress of the shipping process. Conservation framing is strictly adhered to. Your LP record is attached to an acid free matting.
+5	Eric Clapton Signature Clock	6900	Dimensions: 9" x 12"	/images/clock.png	This Rock Around The Clock item is a desk top or wall mount rock n roll clock line.	A Gold bezel with an acrylic protective cover highlight this stylized clock. Accurate to within 2 minutes a year this clock will look and perform perfectly. Runs on 1 AA battery which is included. This is a great way to “Rock Around The Clock”……… Your clock will arrive ready to hang and comes with an attachable stand to convert it to a desk top model. Free gift box included for special gift giving. Shipping weight of this item is 3 pounds and will come to you by Free domestic priority mail.  Orders are shipped the next business day with tracking.
+6	Eric Claption T-Shirt	1299	Size: M	/images/tshirt.png	This tee is a timeless classic - Perfect to wear to class or a festival this summer.	While this is a unisex cut, we typically recommend women size down one size for a more fitted look. Traditional cut for a relaxed but not sloppy fit. Screen printed for a bold look. 100% cotton for hand-softness and durability. Real fans want real gear: This tee is 100% authentic and fully-licensed Eric Clapton merchandise. Rest easy, this shirt is backed our quality promise and our fantastic, personal customer service. Machine wash and dry.\n
+7	Guitar Player Magazine	3999	Year Published: 1976	/images/magazine.png	Guitar Player Magazine - August 1976 Eric Clapton George Benson Ralph McTell	Guitar Player is an American popular magazine for guitarists, founded in 1967 in San Jose, California, United States. It contains articles, interviews, reviews and lessons of an eclectic collection of artists, genres and products. It has been in print since late 1967.
+8	Eric Clapton Signed Drum	24420	Size: 12"	/images/drumhead.png	Eric Clapton Signed Drum Head	Pink snare batter drum heads feature Imaging Technology for stunning visual appeal with powerful projection, tone and durability. Snare batter drum heads are constructed with 2-plies of 7-mil Clear film with an added 5-mil dot on top and a 7-mil dampening inlay ring for a powerful, focused attack. Customize your drums like never before with a new dimension in color that demands to be seen and heard.
+9	Cream - Signed Vinyl	13995	Signed By: Eric Clapton, Ginger Baker, Jack Bruce	/images/vinyl.png	Cream Band Signed Self Titled Album	Cream were a British rock band formed in London in 1966. The group consisted of bassist Jack Bruce, guitarist Eric Clapton, and drummer Ginger Baker. Bruce was the primary songwriter and vocalist, although Clapton and Baker also sang and contributed songs. Formed from members of previously successful bands, they are widely regarded as the world's first supergroup. Cream were highly regarded for the instrumental proficiency of each of their members.
 \.
 
 
@@ -428,21 +617,28 @@ COPY public.products ("productId", name, price, image, "shortDescription", "long
 -- Name: cartItems_cartItemId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 82, true);
+SELECT pg_catalog.setval('public."cartItems_cartItemId_seq"', 183, true);
 
 
 --
 -- Name: carts_cartId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."carts_cartId_seq"', 87, true);
+SELECT pg_catalog.setval('public."carts_cartId_seq"', 137, true);
+
+
+--
+-- Name: orders_fName_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."orders_fName_seq"', 1, false);
 
 
 --
 -- Name: orders_orderId_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('public."orders_orderId_seq"', 1, false);
+SELECT pg_catalog.setval('public."orders_orderId_seq"', 33, true);
 
 
 --
