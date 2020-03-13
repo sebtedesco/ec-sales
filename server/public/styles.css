@@ -62,7 +62,8 @@ body {
 .header-title {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.5rem;
-  color: white;
+  font-weight: bold;
+  color: black;
 }
 
 .cart-summary {
