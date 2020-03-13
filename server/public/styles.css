@@ -3,7 +3,6 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  position: static;
 }
 
 .outermost-container, .cart-summary {
@@ -53,11 +52,12 @@ body {
   font-size: 1.2rem;
   margin: 0;
 }
-/*
+
 .navbar {
+  position: fixed;
   background-image: url(./images/wood-beam-1.png);
   background-position: center;
-} */
+}
 
 .header-title {
   font-family: 'Courier New', Courier, monospace;
