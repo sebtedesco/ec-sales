@@ -1,8 +1,9 @@
 body {
-  background-image: url(./images/guitar-wallpaper.jpg);
+  background-image: url(./images/white-brick.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  position: static;
 }
 
 .outermost-container, .cart-summary {
@@ -52,8 +53,14 @@ body {
   font-size: 1.2rem;
   margin: 0;
 }
+/*
+.navbar {
+  background-image: url(./images/wood-beam-1.png);
+  background-position: center;
+} */
 
 .header-title {
+  font-family: 'Courier New', Courier, monospace;
   font-size: 1.5rem;
   color: white;
 }
