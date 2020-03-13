@@ -53,11 +53,11 @@ body {
   margin: 0;
 }
 
-.navbar {
+/* .navbar {
   position: fixed;
   background-image: url(./images/wood-beam-1.png);
   background-position: center;
-}
+} */
 
 .header-title {
   font-family: 'Courier New', Courier, monospace;
