@@ -11,6 +11,12 @@ body {
   align-items: center;
 }
 
+#productCard, .details-inner-container, .cart-items {
+  background-color: rgba(250, 250, 250, .6);
+  border: 3px solid #5e4b35;
+  border-radius: 4px;
+}
+
 .checkout-field {
   margin-left: 0;
 }
@@ -23,18 +29,9 @@ body {
   cursor: pointer;
 }
 
-#productCard {
-  background-color: rgba(250, 250, 250, 0.8);
-  border: 2px solid #5e4b35;
-}
 .product-image-details {
   height: 250px;
   object-fit: contain;
-}
-
-.details-inner-container {
-  background-color: rgba(250, 250, 250, 0.6);
-  border: 3px solid #5e4b35;
 }
 
 .product-image-container {
@@ -53,7 +50,7 @@ body {
 }
 
 .order-total {
-  color: grey;
+  color: #5e4b35;
   font-size: 1.2rem;
   margin: 0;
 }
@@ -84,9 +81,10 @@ body {
   align-items: center;
   height: 13vh;
   width: 100vw;
+  background-image: url(./images/white-brick.jpg);
+  background-size: initial;
   bottom: 0;
-  background-color: white;
-  border-top: 1px solid grey;
+  border-top: 2px solid #5e4b35;
 }
 
 .consent-modal {
@@ -101,7 +99,6 @@ body {
   left: 25%;
   padding: 12px;
   background: white;
-  border: 3px solid #5e4b35;
   z-index: 1;
 }
 
