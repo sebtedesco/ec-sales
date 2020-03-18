@@ -25,11 +25,16 @@ body {
 
 #productCard {
   background-color: rgba(250, 250, 250, 0.8);
-
+  border: 2px solid #5e4b35;
 }
 .product-image-details {
   height: 250px;
   object-fit: contain;
+}
+
+.details-inner-container {
+  background-color: rgba(250, 250, 250, 0.6);
+  border: 3px solid #5e4b35;
 }
 
 .product-image-container {
@@ -53,17 +58,19 @@ body {
   margin: 0;
 }
 
-/* .navbar {
+.navbar {
   position: fixed;
-  background-image: url(./images/wood-beam-1.png);
+  background-image: url(./images/white-brick.jpg);
   background-position: center;
-} */
+  background-repeat: repeat;
+  border-bottom: 3px solid #5e4b35;
+}
 
 .header-title {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  color: black;
+  color: #5e4b35;
 }
 
 .cart-summary {
@@ -94,7 +101,7 @@ body {
   left: 25%;
   padding: 12px;
   background: white;
-  border: 3px solid black;
+  border: 3px solid #5e4b35;
   z-index: 1;
 }
 

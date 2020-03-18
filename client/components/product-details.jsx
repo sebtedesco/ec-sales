@@ -38,7 +38,7 @@ export default class ProductDetails extends React.Component {
           <div className="d-inline-block back-to-catalog">
             <p onClick={() => this.props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
-          <div className="details-inner-container p-4 border">
+          <div className="details-inner-container p-4">
             <div className="row">
             </div>
             <div className="row">
