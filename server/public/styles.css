@@ -13,7 +13,7 @@ body {
 
 #productCard, .details-inner-container, .cart-items {
   background-color: rgba(250, 250, 250, .6);
-  /* border: 3px solid #5e4b35; */
+  border: 3px solid #5e4b35;
   border-radius: 4px;
 }
 
