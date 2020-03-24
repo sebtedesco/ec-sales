@@ -9,7 +9,7 @@ export default function CartSummary(props) {
       <>
         <div className="container cart-summary">
           <div className="d-inline-block back-to-catalog">
-            <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
+            <p className="back-to-catalog" onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
           <h2>Your cart is empty.</h2>
         </div>

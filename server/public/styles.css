@@ -1,8 +1,10 @@
 body {
+  /* font-family: 'Courier New', Courier, monospace; */
   background-image: url(./images/white-brick.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
+  color: #5e4b35;
 }
 
 .outermost-container, .cart-summary {
@@ -13,7 +15,7 @@ body {
 
 #productCard, .details-inner-container, .cart-items {
   background-color: rgba(250, 250, 250, .6);
-  border: 3px solid #5e4b35;
+  /* border: 3px solid #5e4b35; */
   border-radius: 4px;
 }
 
@@ -27,6 +29,10 @@ body {
 
 .header-title, .btn, #productCard, .back-to-catalog, .cart-items {
   cursor: pointer;
+}
+
+.back-to-catalog {
+  position: fixed;
 }
 
 .product-image-details {
@@ -60,14 +66,13 @@ body {
   background-image: url(./images/white-brick.jpg);
   background-position: center;
   background-repeat: repeat;
-  border-bottom: 3px solid #5e4b35;
+  /* border-bottom: 3px solid #5e4b35; */
 }
 
 .header-title {
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: bold;
-  color: #5e4b35;
 }
 
 .cart-summary {
@@ -82,7 +87,7 @@ body {
   height: 13vh;
   width: 100vw;
 /* background-color: rgb(250, 250, 250); */
-  /* bottom: 0; */
+  bottom: 0;
   /* border-top: 2px solid #5e4b35; */
 }
 
