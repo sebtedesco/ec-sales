@@ -8,9 +8,11 @@ body {
 }
 
 .outermost-container, .cart-summary {
-  margin-top: 54px !important;
+  height: 77vh;
+  /* margin-top: 54px !important; */
   justify-content: center;
   align-items: center;
+  overflow: scroll;
 }
 
 #productCard, .details-inner-container, .cart-items {
@@ -62,11 +64,7 @@ body {
 }
 
 .navbar {
-  position: fixed;
-  background-image: url(./images/white-brick.jpg);
-  background-position: center;
-  background-repeat: repeat;
-  /* border-bottom: 3px solid #5e4b35; */
+  height: 10vh;
 }
 
 .header-title {
