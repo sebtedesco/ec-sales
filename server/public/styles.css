@@ -1,6 +1,6 @@
 body {
   /* font-family: 'Courier New', Courier, monospace; */
-  background-image: url(./images/white-brick.jpg);
+  background-image: url(./images/brick_wallpaper.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -16,7 +16,7 @@ body {
 }
 
 #productCard, .details-inner-container, .cart-items {
-  background-color: rgba(250, 250, 250, .6);
+  background-color: rgba(250, 250, 250, .8);
   /* border: 3px solid #5e4b35; */
   border-radius: 4px;
 }
@@ -68,6 +68,7 @@ body {
 }
 
 .header-title {
+  color: #ffffff;
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.85rem;
   font-weight: bold;
