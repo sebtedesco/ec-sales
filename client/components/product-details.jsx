@@ -34,7 +34,7 @@ export default class ProductDetails extends React.Component {
     } else {
       const price = `$${parseInt((this.state.product.price) / 100).toFixed(2)}`;
       return (
-        <div className="container outermost-container container-no-bottom mt-5">
+        <div className="container outermost-container container-no-bottom">
           <div className="d-inline-block back-to-catalog">
             <p onClick={() => this.props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>

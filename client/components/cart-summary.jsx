@@ -7,7 +7,7 @@ export default function CartSummary(props) {
   if (arrOfCartItems.length === 0) {
     return (
       <>
-        <div className="container cart-summary">
+        <div className="container">
           <div className="d-inline-block back-to-catalog">
             <p className="back-to-catalog" onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
@@ -18,7 +18,7 @@ export default function CartSummary(props) {
   }
   return (
     <>
-      <div className="container cart-summary">
+      <div className="container outermost-container container-bottom-nav">
         <div className="row">
           <div className="col">
             <div className="d-inline-block back-to-catalog">
