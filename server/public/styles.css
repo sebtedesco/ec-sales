@@ -32,7 +32,7 @@ body {
   color: red!important;
 }
 
-.header-title, .btn, #productCard, .back-to-catalog, .cart-items {
+.header-title, .btn, .card, .back-to-catalog, .cart-items {
   cursor: pointer;
 }
 
@@ -68,14 +68,16 @@ body {
 
 .navbar {
   height: 10vh;
-}
-
-.header-title {
+  background-color: rgba(0, 0, 0, .15);
   color: #ffffff;
   font-family: 'Courier New', Courier, monospace;
-  font-size: 1.85rem;
+  font-size: 1.98rem;
   font-weight: bold;
 }
+
+/* .header-title {
+
+} */
 
 .cart-summary {
   margin-bottom: 13vh;
