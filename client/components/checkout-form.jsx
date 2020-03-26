@@ -48,7 +48,6 @@ export default class Checkout extends React.Component {
 
   handleValidation(event) {
     const name = event.target.name;
-    // console.log('name: ', name)
     const errors = { ...this.state.errors };
     const value = event.target.value;
     const oneWordRegex = new RegExp(/^(([A-za-z]+[\s]{1}[A-za-z]+)|([A-Za-z]+))$/);
@@ -58,6 +57,7 @@ export default class Checkout extends React.Component {
     const ccRegex = new RegExp(/(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g);
     const expRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
     const cvvRegex = new RegExp(/^[0-9]{3,4}$/);
+    const checkbox = event.target.value;
 
     switch (name) {
       case 'fName':
@@ -69,8 +69,6 @@ export default class Checkout extends React.Component {
           this.setState({
             errors
           })
-          // console.log('name: ', name)
-          // console.log('error state: ', errors[name])
         };
         break;
       case 'street':
@@ -120,6 +118,14 @@ export default class Checkout extends React.Component {
             errors
           })
         };
+        break;
+      case 'checkbox':
+        if (!checkbox) {
+          errors.cvv = true;
+          this.setState({
+            errors
+          })
+        };
     }
     this.setState({ errors });
     this.errorFree();
@@ -143,156 +149,158 @@ export default class Checkout extends React.Component {
     });
     const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     return (
-      <div className="container-fluid outermost-container">
-        <div className="row m-0">
-          <div className="col col-8 checkout-fields">
-            <h2>My Cart</h2>
-            <div className="row">
-              <h4 className="m-3">Shipping Information</h4>
-            </div>
-            <div className="row mt-2">
-              <div className=" col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  className="form-control"
-                  name="fName"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.fName ? 'red' : ''}`}> {this.state.errors.fName ? 'First name is invalid' : '' } </small>
+      <>
+        <div className="container-fluid outermost-container checkout-form container-bottom-nav">
+          <div className="row m-0">
+            <div className="col col-8 checkout-fields">
+              <h2>Checkout</h2>
+              <div className="row">
+                <h4 className="m-3">Shipping Information</h4>
               </div>
-              <div className="col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  name="lName"
-                  className="form-control"
-                  value={this.state.name}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.lName ? 'red' : ''}`}> {this.state.errors.lName ? 'Last name is invalid' : ''} </small>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Street Address"
-                  name="street"
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-
-                <small className={`form-text text-muted ${this.state.errors.street ? 'red' : ''}`}> {this.state.errors.street ? 'Street is invalid' : ''} </small>
-              </div>
-              <div className="col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="City"
-                  name="city"
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.city ? 'red' : ''}`}> {this.state.errors.city ? 'City is invalid' : ''} </small>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-3 checkout-field">
-                <input
-                  type="text"
-                  placeholder="State"
-                  name="state"
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.state ? 'red' : ''}`}> {this.state.errors.state ? 'State is invalid' : ''} </small>
-              </div>
-              <div className="col-3 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Zip Code"
-                  name="zip"
-                  className="form-control"
-                  value={this.state.address}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.zip ? 'red' : ''}`}> {this.state.errors.zip ? 'Zip Code is invalid' : ''} </small>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <h4 className="m-3">Payment Information</h4>
-            </div>
-            <div className="row mt-2">
-              <div className="col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  name="fullName"
-                  className="form-control"
-                  value={this.state.creditCard}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.fullName ? 'red' : ''}`}> {this.state.errors.fullName ? 'Full name is invalid' : ''} </small>
-              </div>
-              <div className="col-5 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Credit Card Number"
-                  name="creditCardNumber"
-                  className="form-control"
-                  value={this.state.creditCard}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.creditCardNumber ? 'red' : ''}`}> {this.state.errors.creditCardNumber ? 'Credit card number is invalid' : ''} </small>
-              </div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-3 checkout-field">
-                <input
-                  type="text"
-                  placeholder="Expiration (MM/YY)"
-                  name="expiration"
-                  className="form-control"
-                  value={this.state.creditCard}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
-                />
-                <small className={`form-text text-muted ${this.state.errors.expiration ? 'red' : ''}`}> {this.state.errors.expiration ? 'Expiration date is invalid' : ''} </small>
-              </div>
-              <div className="col-3 checkout-field">
-                <input
-                  type="text"
-                  placeholder="CVV"
-                  name="cvv"
-                  className="form-control"
-                  value={this.state.creditCard}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
+              <div className="row mt-2">
+                <div className=" col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    className="form-control"
+                    name="fName"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
                   />
-                <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
+                  <small className={`form-text text-muted ${this.state.errors.fName ? 'red' : ''}`}> {this.state.errors.fName ? 'First name is invalid' : '' } </small>
+                </div>
+                <div className="col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    name="lName"
+                    className="form-control"
+                    value={this.state.name}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.lName ? 'red' : ''}`}> {this.state.errors.lName ? 'Last name is invalid' : ''} </small>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Street Address"
+                    name="street"
+                    className="form-control"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+
+                  <small className={`form-text text-muted ${this.state.errors.street ? 'red' : ''}`}> {this.state.errors.street ? 'Street is invalid' : ''} </small>
+                </div>
+                <div className="col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="City"
+                    name="city"
+                    className="form-control"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.city ? 'red' : ''}`}> {this.state.errors.city ? 'City is invalid' : ''} </small>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-3 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="State"
+                    name="state"
+                    className="form-control"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.state ? 'red' : ''}`}> {this.state.errors.state ? 'State is invalid' : ''} </small>
+                </div>
+                <div className="col-3 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Zip Code"
+                    name="zip"
+                    className="form-control"
+                    value={this.state.address}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.zip ? 'red' : ''}`}> {this.state.errors.zip ? 'Zip Code is invalid' : ''} </small>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <h4 className="m-3">Payment Information</h4>
+              </div>
+              <div className="row mt-2">
+                <div className="col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Full Name"
+                    name="fullName"
+                    className="form-control"
+                    value={this.state.creditCard}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.fullName ? 'red' : ''}`}> {this.state.errors.fullName ? 'Full name is invalid' : ''} </small>
+                </div>
+                <div className="col-5 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Credit Card Number"
+                    name="creditCardNumber"
+                    className="form-control"
+                    value={this.state.creditCard}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.creditCardNumber ? 'red' : ''}`}> {this.state.errors.creditCardNumber ? 'Credit card number is invalid' : ''} </small>
+                </div>
+              </div>
+              <div className="row mt-2">
+                <div className="col-3 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="Expiration (MM/YY)"
+                    name="expiration"
+                    className="form-control"
+                    value={this.state.creditCard}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                  />
+                  <small className={`form-text text-muted ${this.state.errors.expiration ? 'red' : ''}`}> {this.state.errors.expiration ? 'Expiration date is invalid' : ''} </small>
+                </div>
+                <div className="col-3 checkout-field">
+                  <input
+                    type="text"
+                    placeholder="CVV"
+                    name="cvv"
+                    className="form-control"
+                    value={this.state.creditCard}
+                    onChange={this.handleChange}
+                    onBlur={this.handleValidation}
+                    />
+                  <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-12">
+                  <p><input type="checkbox" name="checkbox" />  I understand that by clicking "Place Order" I am not placing an order.</p>
+                </div>
               </div>
             </div>
-            <div className="row mt-4">
-              <div className="col-12">
-                <p><input type="checkbox" name="terms" />  I understand that by clicking "Place Order" I am not placing an order.</p>
-              </div>
-            </div>
-            <BottomNav cart={this.props.cart} orderDetails={this.state} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree} placeOrder={this.props.placeOrder}/>
           </div>
         </div>
-      </div>
+        <BottomNav cart={this.props.cart} orderDetails={this.state} view={this.props.view} setViewMethod={this.props.setViewMethod} errorFree={this.state.errorFree} placeOrder={this.props.placeOrder} />
+      </>
     );
   }
 }
