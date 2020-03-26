@@ -15,7 +15,7 @@ body {
   overflow: scroll;
 }
 
-.no-bottom-container {
+.container-no-bottom {
   height: 90vh;
 }
 
@@ -70,14 +70,13 @@ body {
   height: 10vh;
   background-color: rgba(0, 0, 0, .15);
   color: #ffffff;
+}
+
+.header-title {
   font-family: 'Courier New', Courier, monospace;
   font-size: 1.98rem;
   font-weight: bold;
 }
-
-/* .header-title {
-
-} */
 
 .cart-summary {
   margin-bottom: 13vh;
