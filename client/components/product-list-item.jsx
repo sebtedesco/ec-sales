@@ -5,7 +5,6 @@ export default function ProductListItem(props) {
   return (
     <div
       className="justify-content-center card col-lg-3 col-md-5 m-4"
-      id="productCard"
       onClick={() => props.setViewCallback('details', {
         productId: props.product.productId
       })}>

@@ -30,7 +30,7 @@ export default class ProductList extends React.Component {
 
   render() {
     return (
-      <div className={`container outermost-container ${this.props.firstVisit ? 'overflow-hidden' : ''}`}>
+      <div className={`container outermost-container no-bottom-container ${this.props.firstVisit ? 'overflow-hidden' : ''}`}>
         <div className="row justify-content-center">
           {
             this.state.products.map(product => {
