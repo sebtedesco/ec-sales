@@ -14,7 +14,7 @@ body {
   align-items: center;
 }
 
-.details-inner-container, .product-list {
+.details-inner-container, .product-list, .checkout-form {
   overflow: scroll;
 }
 
