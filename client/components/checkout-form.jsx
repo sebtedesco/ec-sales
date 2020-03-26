@@ -145,7 +145,7 @@ export default class Checkout extends React.Component {
     return (
       <div className="container-fluid outermost-container">
         <div className="row m-0">
-          <div className="col col-8">
+          <div className="col col-8 checkout-fields">
             <h2>My Cart</h2>
             <div className="row">
               <h4 className="m-3">Shipping Information</h4>
