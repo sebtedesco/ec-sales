@@ -11,31 +11,27 @@ export default function CartSummary(props) {
           <div className="d-inline-block back-to-catalog">
             <p className="back-to-catalog" onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
-          <h2>Your cart is empty.</h2>
+          <h2 className="whiteFont">Your cart is empty.</h2>
         </div>
       </>
     );
   }
   return (
     <>
-      <div className="container outermost-container container-bottom-nav">
+      <div className="container outermost-container container-bottom-nav cart">
         <div className="d-inline-block back-to-catalog">
           <p onClick={() => props.setViewMethod('catalog', {})}>{<i className="fas fa-arrow-circle-left"></i>} Back to Catalog</p>
         </div>
-        <div className="checkout-form">
-          <div className="row">
-            <div className="col">
-              <div className="p-4">
-                {
-                  props.cart.map(cartItem => {
-                    return <CartSummaryItem
-                      key={cartItem.cartItemId}
-                      cartItem={cartItem}
-                    />;
-                  })
-                }
-              </div>
-            </div>
+        <div className="row">
+          <div className="col p-4">
+            {
+              props.cart.map(cartItem => {
+                return <CartSummaryItem
+                  key={cartItem.cartItemId}
+                  cartItem={cartItem}
+                />;
+              })
+            }
           </div>
         </div>
       </div>

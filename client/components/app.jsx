@@ -18,6 +18,7 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
+      finalOrder: [],
       firstVisit: true
     };
 
@@ -87,7 +88,6 @@ export default class App extends React.Component {
   }
 
   placeOrder(orderObject) {
-    // console.log('order placed: ', orderObject);
     if (!orderObject.fName || !orderObject.creditCardNumber || !orderObject.street) {
       return console.error('HERE! one or more fields missing');
     }
@@ -101,6 +101,7 @@ export default class App extends React.Component {
     fetch('/api/orders', init)
       .then(response => {
         this.setState({
+          finalOrder: this.state.cart,
           cart: [],
           view: { name: 'confirmation' }
         });
@@ -125,7 +126,7 @@ export default class App extends React.Component {
     } else if (this.state.view.name === 'checkout') {
       reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} view={this.state.view.name} setViewMethod={this.setView} cart={this.state.cart} />;
     } else if (this.state.view.name === 'confirmation') {
-      reactElementToDisplay = <Confirmation view={this.state.view.name} cart={this.state.cart} setViewMethod={this.setView}/>;
+      reactElementToDisplay = <Confirmation view={this.state.view.name} finalOrder={this.state.finalOrder} setViewMethod={this.setView}/>;
     }
     return (
       <>
