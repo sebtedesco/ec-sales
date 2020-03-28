@@ -16,6 +16,7 @@ export default class Checkout extends React.Component {
       creditCardNumber: '',
       expiration: '',
       cvv: '',
+      // checkbox: '',
       errors: {
         fName: false,
         lName: false,
@@ -26,7 +27,8 @@ export default class Checkout extends React.Component {
         fullName: false,
         creditCardNumber: false,
         expiration: false,
-        cvv: false
+        cvv: false,
+        checkbox: true
       },
       errorFree: false
     };
@@ -57,7 +59,6 @@ export default class Checkout extends React.Component {
     const ccRegex = new RegExp(/(\d{4}[-. ]?){4}|\d{4}[-. ]?\d{6}[-. ]?\d{5}/g);
     const expRegex = new RegExp(/^(0[1-9]|1[012])[ -\/]\d\d$/);
     const cvvRegex = new RegExp(/^[0-9]{3,4}$/);
-    const checkbox = event.target.value;
 
     switch (name) {
       case 'fName':
@@ -120,12 +121,10 @@ export default class Checkout extends React.Component {
         };
         break;
       case 'checkbox':
-        if (!checkbox) {
-          errors.cvv = true;
-          this.setState({
-            errors
-          })
-        };
+        errors.checkbox = !errors.checkbox;
+        this.setState({
+          errors
+        })
     }
     this.setState({ errors });
     this.errorFree();
@@ -134,7 +133,7 @@ export default class Checkout extends React.Component {
     // if(!this.state.errors.fName && this.state.fName !=== '' && !this.state.errors.lName && this.state.lName !=== '' && !this.state.errors.street this.state.street !=== '' && !this.state.errors.city && this.state.city !=== '' && !this.state.errors.state && this.state.state !=== '' && !this.state.errors.zip && this.state.zip !=== '' && !this.state.errors.fullName && this.state.fullName !=== ''&& !this.state.errors.creditCardNumber && this.state.creditCardNumber !=== '' && !this.state.errors.expiration && this.state.expiration !=== ''&& !this.state.errors.cvv && this.state.cvv !=== '') {
 
   errorFree(){
-    if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv) {
+    if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && !this.state.errors.checkbox) {
       this.setState({ errorFree: true });
     }else {
       this.setState({ errorFree: false });
@@ -293,7 +292,14 @@ export default class Checkout extends React.Component {
               </div>
               <div className="row mt-4">
                 <div className="col-12">
-                  <p><input type="checkbox" name="checkbox" />  I understand that by clicking "Place Order" I am not placing an order.</p>
+                  <p><input
+                    type="checkbox"
+                    placeholder="checkbox"
+                    name="checkbox"
+                    className="form-control"
+                    value={this.state.checkbox}
+                    onChange={this.handleValidation}
+                     />  I understand that by clicking "Place Order" I am not placing an order.</p>
                 </div>
               </div>
             </div>
