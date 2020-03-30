@@ -1,4 +1,4 @@
-# EC Sales
+# Eric Clapton Souvenir Shop
 
 A full stack Node.js and React shopping cart app.
 
