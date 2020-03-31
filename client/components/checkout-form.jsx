@@ -134,8 +134,10 @@ export default class Checkout extends React.Component {
 
   errorFree(){
     if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && !this.state.errors.checkbox) {
+      console.log('error free!')
       this.setState({ errorFree: true });
     }else {
+      console.log('errors...')
       this.setState({ errorFree: false });
     }
   }
@@ -301,6 +303,7 @@ export default class Checkout extends React.Component {
                     onChange={this.handleValidation}
                      />  I understand that by clicking "Place Order" I am not placing an order.</p>
                 </div>
+                <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'Required field' : ''} </small>
               </div>
             </div>
           </div>
