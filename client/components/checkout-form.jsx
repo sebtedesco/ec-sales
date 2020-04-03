@@ -293,17 +293,19 @@ export default class Checkout extends React.Component {
                 </div>
               </div>
               <div className="row mt-4">
-                <div className="col-12">
-                  <p><input
-                    type="checkbox"
-                    placeholder="checkbox"
-                    name="checkbox"
-                    className="form-control"
-                    value={this.state.checkbox}
-                    onChange={this.handleValidation}
-                     />  I understand that by clicking "Place Order" I am not placing an order.</p>
-                </div>
-                <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'Required field' : ''} </small>
+                <form className="col-12">
+                  <div>
+                    <label><input
+                      type="checkbox"
+                      placeholder="checkbox"
+                      name="checkbox"
+                      className="d-inline mr-2 pb-1"
+                      value={this.state.checkbox}
+                      onChange={this.handleValidation}
+                    /> I understand that by clicking "Place Order" I am not placing an order.</label>
+                    <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
