@@ -16,7 +16,7 @@ export default class Checkout extends React.Component {
       creditCardNumber: '',
       expiration: '',
       cvv: '',
-      // checkbox: '',
+      checkbox: '',
       errors: {
         fName: false,
         lName: false,
@@ -130,10 +130,8 @@ export default class Checkout extends React.Component {
     this.errorFree();
   }
 
-    // if(!this.state.errors.fName && this.state.fName !=== '' && !this.state.errors.lName && this.state.lName !=== '' && !this.state.errors.street this.state.street !=== '' && !this.state.errors.city && this.state.city !=== '' && !this.state.errors.state && this.state.state !=== '' && !this.state.errors.zip && this.state.zip !=== '' && !this.state.errors.fullName && this.state.fullName !=== ''&& !this.state.errors.creditCardNumber && this.state.creditCardNumber !=== '' && !this.state.errors.expiration && this.state.expiration !=== ''&& !this.state.errors.cvv && this.state.cvv !=== '') {
-
   errorFree(){
-    if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && !this.state.errors.checkbox) {
+    if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && this.state.checkbox && !this.state.errors.checkbox) {
       console.log('error free!')
       this.setState({ errorFree: true });
     }else {
