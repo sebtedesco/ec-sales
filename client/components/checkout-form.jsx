@@ -28,7 +28,7 @@ export default class Checkout extends React.Component {
         creditCardNumber: false,
         expiration: false,
         cvv: false,
-        checkbox: true
+        checkbox: false
       },
       errorFree: false
     };
@@ -39,7 +39,16 @@ export default class Checkout extends React.Component {
   handleChange(event) {
     event.preventDefault();
     const name = event.target.name;
-    const value = event.target.value;
+    let value;
+    if(name === 'checkbox'){
+      errors.checkbox = !errors.checkbox
+          this.setState({
+            errors
+          })
+      }else{
+      value = event.target.value;
+    }
+    console.log('value: ', event.target.value)
     const errors = { ...this.state.errors };
     errors[name] = false
     this.setState({
@@ -49,6 +58,7 @@ export default class Checkout extends React.Component {
   };
 
   handleValidation(event) {
+    event.preventDefault();
     const name = event.target.name;
     const errors = { ...this.state.errors };
     const value = event.target.value;
@@ -120,11 +130,6 @@ export default class Checkout extends React.Component {
           })
         };
         break;
-      case 'checkbox':
-        errors.checkbox = !errors.checkbox;
-        this.setState({
-          errors
-        })
     }
     this.setState({ errors });
     this.errorFree();
@@ -141,6 +146,7 @@ export default class Checkout extends React.Component {
   }
 
   render() {
+    let checkboxChecked = false;
     const arrOfCartItems = this.props.cart;
     let totalPrice = null;
     arrOfCartItems.forEach(item => {
@@ -299,7 +305,8 @@ export default class Checkout extends React.Component {
                       name="checkbox"
                       className="d-inline mr-2 pb-1"
                       value={this.state.checkbox}
-                      onChange={this.handleValidation}
+                      onChange={this.handleChange}
+                      onBlur={this.handleValidation }
                     /> I understand that by clicking "Place Order" I am not placing an order.</label>
                     <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>
                   </div>
