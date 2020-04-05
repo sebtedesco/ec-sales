@@ -28,7 +28,7 @@ export default class Checkout extends React.Component {
         creditCardNumber: false,
         expiration: false,
         cvv: false,
-        checkbox: false
+        checkbox: ''
       },
       errorFree: false
     };
@@ -40,22 +40,29 @@ export default class Checkout extends React.Component {
     event.preventDefault();
     const name = event.target.name;
     let value;
-    if(name === 'checkbox'){
-      errors.checkbox = !errors.checkbox
-          this.setState({
-            errors
-          })
-      }else{
-      value = event.target.value;
-    }
-    console.log('value: ', event.target.value)
     const errors = { ...this.state.errors };
-    errors[name] = false
-    this.setState({
-      [name]: value,
-      errors
-    })
-  };
+    if(name === 'checkbox'){
+      console.log('checkbox conditional')
+
+      if(errors.checkbox === ''){
+        console.log('empty string')
+        errors[name] === false;
+      }else{
+        errors[name] = !errors.checkbox
+      }
+      this.setState({
+        errors
+      })
+    }else{
+      value = event.target.value;
+      const errors = { ...this.state.errors };
+      errors[name] = false
+      this.setState({
+        [name]: value,
+        errors
+      })
+    }
+  }
 
   handleValidation(event) {
     event.preventDefault();
