@@ -40,13 +40,12 @@ export default class Checkout extends React.Component {
     event.preventDefault();
     const name = event.target.name;
     let value;
-    const errors = { ...this.state.errors };
     if(name === 'checkbox'){
       console.log('checkbox conditional')
-
+      const errors = { ...this.state.errors };
       if(errors.checkbox === ''){
         console.log('empty string')
-        errors[name] === false;
+        errors[name] = false;
       }else{
         errors[name] = !errors.checkbox
       }
@@ -216,8 +215,8 @@ export default class Checkout extends React.Component {
                     name="city"
                     className="form-control"
                     value={this.state.address}
-                    onChange={this.handleChange}
-                    onBlur={this.handleValidation}
+                    // onChange={this.handleChange}
+                    onBlur={this.handleChange}
                   />
                   <small className={`form-text text-muted ${this.state.errors.city ? 'red' : ''}`}> {this.state.errors.city ? 'City is invalid' : ''} </small>
                 </div>
