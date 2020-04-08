@@ -282,8 +282,8 @@ export default class Checkout extends React.Component {
                   name="expiration"
                   className="form-control"
                   value={this.state.creditCard}
-                  onChange={this.handleChange}
-                  onBlur={this.handleValidation}
+                  // onChange={this.handleChange}
+                  onBlur={this.handleChange}
                 />
                 <small className={`form-text text-muted ${this.state.errors.expiration ? 'red' : ''}`}> {this.state.errors.expiration ? 'Expiration date is invalid' : ''} </small>
               </div>
