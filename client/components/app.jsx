@@ -4,6 +4,8 @@ import ProductList from './product-list';
 import ProductDetails from './product-details';
 import CartSummary from './cart-summary';
 import Checkout from './checkout-form';
+import ConsentModal from './consent-modal';
+import Confirmation from './confirmation-page';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -15,12 +17,17 @@ export default class App extends React.Component {
         name: 'catalog',
         params: {}
       },
-      cart: []
+      cart: [],
+      finalOrder: [],
+      firstVisit: true
     };
 
     this.setView = this.setView.bind(this);
     this.addToCart = this.addToCart.bind(this);
     this.placeOrder = this.placeOrder.bind(this);
+    this.showConsentModal = this.showConsentModal.bind(this);
+    this.hideConsentModal = this.hideConsentModal.bind(this);
+
   }
 
   componentDidMount() {
@@ -30,6 +37,18 @@ export default class App extends React.Component {
       .then(data => this.setState({ message: data.message || data.error }))
       .catch(err => this.setState({ message: err.message }))
       .finally(() => this.setState({ isLoading: false }));
+
+  }
+
+  showConsentModal() {
+    if (this.state.firstVisit) {
+      return <ConsentModal hideConsentModal={this.hideConsentModal}/>;
+    }
+
+  }
+
+  hideConsentModal() {
+    this.setState({ firstVisit: false });
   }
 
   setView(setViewName, setViewParams) {
@@ -69,8 +88,8 @@ export default class App extends React.Component {
   }
 
   placeOrder(orderObject) {
-    if (!orderObject.name || !orderObject.creditCard || !orderObject.address) {
-      return console.error('one or more fields missing');
+    if (!orderObject.fName || !orderObject.creditCardNumber || !orderObject.street) {
+      return console.error('HERE! one or more fields missing');
     }
     const init = {
       method: 'POST',
@@ -82,26 +101,36 @@ export default class App extends React.Component {
     fetch('/api/orders', init)
       .then(response => {
         this.setState({
+          finalOrder: this.state.cart,
           cart: [],
-          view: { name: 'catalog' }
+          view: { name: 'confirmation' }
         });
       })
       .catch(err => console.error(err));
   }
 
   render() {
+    const arrOfCartItems = this.state.cart;
+    let totalPrice = null;
+    arrOfCartItems.forEach(item => {
+      totalPrice += item.price;
+    });
+    const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     let reactElementToDisplay = null;
     if (this.state.view.name === 'catalog') {
-      reactElementToDisplay = <ProductList setViewMethod={this.setView} />;
+      reactElementToDisplay = <ProductList setViewMethod={this.setView} firstVisit={this.state.firstVisit} />;
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
-      reactElementToDisplay = <CartSummary cart={this.state.cart} setViewMethod={this.setView} />;
+      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} />;
     } else if (this.state.view.name === 'checkout') {
-      reactElementToDisplay = <Checkout placeOrder={this.placeOrder} setViewMethod={this.setView} cart={this.state.cart} />;
+      reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} view={this.state.view.name} setViewMethod={this.setView} cart={this.state.cart} />;
+    } else if (this.state.view.name === 'confirmation') {
+      reactElementToDisplay = <Confirmation view={this.state.view.name} finalOrder={this.state.finalOrder} setViewMethod={this.setView}/>;
     }
     return (
       <>
+        {this.showConsentModal()}
         <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView}/>
         { reactElementToDisplay }
       </>

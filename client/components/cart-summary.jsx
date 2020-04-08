@@ -1,53 +1,41 @@
 import React from 'react';
 import CartSummaryItem from './cart-summary-item';
+import BottomNav from './bottom-nav';
 
 export default function CartSummary(props) {
-
   const arrOfCartItems = props.cart;
-  let totalPrice = null;
-  arrOfCartItems.forEach(item => {
-    totalPrice += item.price;
-  });
-  const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
   if (arrOfCartItems.length === 0) {
     return (
       <>
-        <div className="container cart-summary">
+        <div className="container">
           <div className="d-inline-block back-to-catalog">
-            <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
+            <p className="back-to-catalog" onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
-          <h2>Your cart is empty.</h2>
+          <h2 className="whiteFont">Your cart is empty.</h2>
         </div>
       </>
     );
   }
   return (
     <>
-      <div className="container cart-summary">
+      <div className="container outermost-container container-bottom-nav cart">
+        <div className="d-inline-block back-to-catalog">
+          <p onClick={() => props.setViewMethod('catalog', {})}>{<i className="fas fa-arrow-circle-left"></i>} Back to Catalog</p>
+        </div>
         <div className="row">
-          <div className="col">
-            <div className="d-inline-block back-to-catalog">
-              <p onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
-            </div>
-            <div className="p-4">
-              {
-                props.cart.map(cartItem => {
-                  return <CartSummaryItem
-                    key={cartItem.cartItemId}
-                    cartItem={cartItem}
-                  />;
-                })
-              }
-            </div>
+          <div className="col p-4">
+            {
+              props.cart.map(cartItem => {
+                return <CartSummaryItem
+                  key={cartItem.cartItemId}
+                  cartItem={cartItem}
+                />;
+              })
+            }
           </div>
         </div>
       </div>
-      <div className="container-fluid">
-        <div className="bottom-nav row justify-content-between">
-          <p className="col order-total">Cart Total: {totalPriceFormatted}</p>
-          <button type="button" className="btn btn-primary mr-5" onClick={() => props.setViewMethod('checkout', {})}>Checkout</button>
-        </div>
-      </div>
+      <BottomNav cart={props.cart} view={props.view} setViewMethod={props.setViewMethod}/>
     </>
   );
 }

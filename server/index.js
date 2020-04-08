@@ -159,20 +159,22 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.post('/api/orders', (req, res, next) => {
+  // console.log('req.body: ', req.body);
   const cartId = req.session.cartId;
-  const name = req.body.name;
-  const creditCard = req.body.creditCard;
-  const address = req.body.address;
+  const name = req.body.fName;
+  const creditCardNumber = req.body.creditCardNumber;
+  const address = req.body.street;
   if (!cartId) {
     throw new ClientError('No cartId in this request. cartId required.', 400);
-  } else if (!name || !creditCard || !address) {
+  } else if (!name || !creditCardNumber || !address) {
     throw new ClientError('Name, credit card, and shipping address are required. One or more are missing.', 400);
   }
   const sqlCheckoutInfo = `
-    INSERT into "orders" ("cartId", "name", "creditCard", "shippingAddress")
-    VALUES ($1, $2, $3, $4)
+    INSERT into "orders" ("cartId", "fName", "lName", "street", "city", "state", "zip", "fullName", "creditCardNumber", "expiration", "cvv")
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
     returning *`;
-  const values = [cartId, name, creditCard, address];
+  const values = [cartId, name, req.body.lName, address, req.body.city, req.body.state, req.body.zip, req.body.fullName, creditCardNumber, req.body.expiration, req.body.cvv];
+  // console.log(values);
   db.query(sqlCheckoutInfo, values)
     .then(response => {
       delete req.session.cartId;

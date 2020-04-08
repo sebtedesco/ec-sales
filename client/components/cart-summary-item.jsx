@@ -3,7 +3,7 @@ import React from 'react';
 export default function CartSummaryItem(props) {
   const price = `$${parseInt((props.cartItem.price) / 100).toFixed(2)}`;
   return (
-    <div className="container border mt-2 mb-2 w-lg-75">
+    <div className="container mt-2 mb-2 w-lg-75 cart-items">
       <div className="row">
         <div className="col">
           <div className="col-lg-4 col-md-4 d-inline-block">
