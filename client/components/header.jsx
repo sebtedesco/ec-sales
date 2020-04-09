@@ -4,7 +4,7 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <nav className="navbar">
+      <nav className="navbar dark-background">
         <div className="header-title" onClick={() => this.props.setViewMethod('catalog', {})}>
           Eric Clapton Souvenir Shop
         </div>
