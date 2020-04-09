@@ -16,7 +16,6 @@ export default class Checkout extends React.Component {
       creditCardNumber: '',
       expiration: '',
       cvv: '',
-      checkbox: '',
       errors: {
         fName: false,
         lName: false,
@@ -28,7 +27,7 @@ export default class Checkout extends React.Component {
         creditCardNumber: false,
         expiration: false,
         cvv: false,
-        checkbox: ''
+        checkbox: 'init'
       },
       errorFree: false
     };
@@ -136,13 +135,28 @@ export default class Checkout extends React.Component {
           })
         };
         break;
+      case 'checkbox':
+        if (this.state.errors.checkbox === 'init') {
+          console.log('its a string to changing to true')
+          errors.checkbox = false;
+        }else{
+          console.log(`its ${errors.checkbox} so changing to ${!errors.checkbox}`)
+          errors.checkbox = !errors.checkbox;
+        }
+        this.setState({
+          errors
+        })
     }
-    this.setState({ errors });
-    this.errorFree();
+
+    this.setState({ errors }, () => {
+      this.errorFree();
+    })
+    // this.setState({ errors })
+    // this.errorFree();
   }
 
   errorFree() {
-    if (!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && this.state.checkbox && !this.state.errors.checkbox) {
+    if (!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && !this.state.errors.checkbox) {
       console.log('error free!')
       this.setState({ errorFree: true });
     } else {
@@ -311,7 +325,7 @@ export default class Checkout extends React.Component {
                       name="checkbox"
                       className="d-inline mr-2 pb-1"
                       value={this.state.checkbox}
-                      onChange={this.handleChange}
+                      // onChange={this.handleChange}
                       onBlur={this.handleValidation}
                     /> I understand that by clicking "Place Order" I am not placing an order.</label>
                     <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>
