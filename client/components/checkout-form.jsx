@@ -136,9 +136,19 @@ export default class Checkout extends React.Component {
           })
         };
         break;
+      case 'checkbox':
+        if (this.state.errors.checkbox === '') {
+          console.log('its a string to changing to true')
+          errors.checkbox = true;
+        }else{
+          console.log(`its ${errors.checkbox} so changing to ${!errors.checkbox}`)
+          errors.checkbox = !errors.checkbox;
+        }
+        this.setState({
+          errors
+        })
     }
-    this.setState({ errors });
-    this.errorFree();
+    this.setState({ errors }).then(this.errorFree());
   }
 
   errorFree() {
@@ -311,7 +321,7 @@ export default class Checkout extends React.Component {
                       name="checkbox"
                       className="d-inline mr-2 pb-1"
                       value={this.state.checkbox}
-                      onChange={this.handleChange}
+                      // onChange={this.handleChange}
                       onBlur={this.handleValidation}
                     /> I understand that by clicking "Place Order" I am not placing an order.</label>
                     <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>
