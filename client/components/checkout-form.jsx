@@ -40,19 +40,19 @@ export default class Checkout extends React.Component {
     event.preventDefault();
     const name = event.target.name;
     let value;
-    if(name === 'checkbox'){
+    if (name === 'checkbox') {
       console.log('checkbox conditional')
       const errors = { ...this.state.errors };
-      if(errors.checkbox === ''){
+      if (errors.checkbox === '') {
         console.log('empty string')
         errors[name] = false;
-      }else{
+      } else {
         errors[name] = !errors.checkbox
       }
       this.setState({
         errors
       })
-    }else{
+    } else {
       value = event.target.value;
       const errors = { ...this.state.errors };
       errors[name] = false
@@ -81,7 +81,7 @@ export default class Checkout extends React.Component {
       case 'lName':
       case 'city':
       case 'state':
-        if(!oneWordRegex.test(this.state[name])){
+        if (!oneWordRegex.test(this.state[name])) {
           errors[name] = true;
           this.setState({
             errors
@@ -141,11 +141,11 @@ export default class Checkout extends React.Component {
     this.errorFree();
   }
 
-  errorFree(){
-    if(!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && this.state.checkbox && !this.state.errors.checkbox) {
+  errorFree() {
+    if (!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && this.state.checkbox && !this.state.errors.checkbox) {
       console.log('error free!')
       this.setState({ errorFree: true });
-    }else {
+    } else {
       console.log('errors...')
       this.setState({ errorFree: false });
     }
@@ -179,7 +179,7 @@ export default class Checkout extends React.Component {
                     onChange={this.handleChange}
                     onBlur={this.handleValidation}
                   />
-                  <small className={`form-text text-muted ${this.state.errors.fName ? 'red' : ''}`}> {this.state.errors.fName ? 'First name is invalid' : '' } </small>
+                  <small className={`form-text text-muted ${this.state.errors.fName ? 'red' : ''}`}> {this.state.errors.fName ? 'First name is invalid' : ''} </small>
                 </div>
                 <div className="col-5 checkout-field">
                   <input
@@ -298,7 +298,7 @@ export default class Checkout extends React.Component {
                     value={this.state.creditCard}
                     onChange={this.handleChange}
                     onBlur={this.handleValidation}
-                    />
+                  />
                   <small className={`form-text text-muted ${this.state.errors.cvv ? 'red' : ''}`}> {this.state.errors.cvv ? 'CVV is invalid' : ''} </small>
                 </div>
               </div>
@@ -312,7 +312,7 @@ export default class Checkout extends React.Component {
                       className="d-inline mr-2 pb-1"
                       value={this.state.checkbox}
                       onChange={this.handleChange}
-                      onBlur={this.handleValidation }
+                      onBlur={this.handleValidation}
                     /> I understand that by clicking "Place Order" I am not placing an order.</label>
                     <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>
                   </div>
