@@ -18,9 +18,9 @@ export default function CartSummary(props) {
   }
   return (
     <>
-      <div className="container outermost-container container-bottom-nav cart">
+      <div className="container container-bottom-nav cart">
         <div className="d-inline-block back-to-catalog">
-          <p onClick={() => props.setViewMethod('catalog', {})}>{<i className="fas fa-arrow-circle-left dark-background"></i>} Back to Catalog</p>
+          <div onClick={() => props.setViewMethod('catalog', {})}>{<i className="fas fa-arrow-circle-left"></i>} Back to Catalog</div>
         </div>
         <div className="row">
           <div className="col p-4">
