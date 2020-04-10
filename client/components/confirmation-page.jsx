@@ -6,7 +6,7 @@ export default function Confirmation(props) {
   return (
     <>
       <h2 className="whiteFont pl-4">Thanks for placing a fake order!</h2>
-      <div className="container outermost-container container-bottom-nav cart">
+      <div className="container container-bottom-nav cart">
         <div className="">
           <div className="row">
             <div className="col p-4">

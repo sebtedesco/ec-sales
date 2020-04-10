@@ -175,10 +175,10 @@ export default class Checkout extends React.Component {
     const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
     return (
       <>
-        <div className="container-fluid outermost-container checkout-form container-bottom-nav">
+        <div className="container checkout-form container-bottom-nav">
           <div className="row m-0">
-            <div className="col col-8 checkout-fields">
-              <h2>Checkout</h2>
+            <div className="col checkout-fields">
+              <h2 className="m2">Checkout</h2>
               <div className="row">
                 <h4 className="m-3">Shipping Information</h4>
               </div>

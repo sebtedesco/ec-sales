@@ -47,10 +47,10 @@ export default function BottomNav(props) {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="bottom-nav row justify-content-between">
-        <p className="col order-total">{totalText} {totalPriceFormatted}</p>
-        <button type="button" className="btn btn-primary mr-5" onClick={ buttonClicked }>{buttonText}</button>
+        <div className="col order-total">{totalText} {totalPriceFormatted}</div>
+        <button type="button" className="btn btn-primary checkout-button" onClick={ buttonClicked }>{buttonText}</button>
       </div>
     </div>
   );
