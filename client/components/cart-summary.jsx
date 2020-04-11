@@ -7,11 +7,11 @@ export default function CartSummary(props) {
   if (arrOfCartItems.length === 0) {
     return (
       <>
-        <div className="container dark-background">
+        <div className="container white-background">
           <div className="d-inline-block back-to-catalog">
             <p className="back-to-catalog" onClick={() => props.setViewMethod('catalog', {})}>{'<'} Back to Catalog</p>
           </div>
-          <h2 className="whiteFont">Your cart is empty.</h2>
+          <h2 className="p-5">Your cart is empty.</h2>
         </div>
       </>
     );

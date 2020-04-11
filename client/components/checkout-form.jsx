@@ -325,7 +325,7 @@ export default class Checkout extends React.Component {
                       name="checkbox"
                       className="d-inline mr-2 pb-1"
                       value={this.state.checkbox}
-                      // onChange={this.handleChange}
+                      onChange={console.log('checkbox changed')}
                       onBlur={this.handleValidation}
                     /> I understand that by clicking "Place Order" I am not placing an order.</label>
                     <small className={`form-text text-muted ${this.state.errors.checkbox ? 'red' : ''}`}> {this.state.errors.checkbox ? 'You must check the box if you wish to proceed' : ''} </small>

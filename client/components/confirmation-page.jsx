@@ -5,8 +5,8 @@ import BottomNav from './bottom-nav';
 export default function Confirmation(props) {
   return (
     <>
-      <h2 className="whiteFont pl-4">Thanks for placing a fake order!</h2>
-      <div className="container container-bottom-nav cart">
+      <div className="container container-bottom-nav">
+        <h2 className="p-4">Thanks for placing a fake order!</h2>
         <div className="">
           <div className="row">
             <div className="col p-4">
