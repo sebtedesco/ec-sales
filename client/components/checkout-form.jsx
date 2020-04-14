@@ -139,7 +139,7 @@ export default class Checkout extends React.Component {
         if (this.state.errors.checkbox === 'init') {
           console.log('its a string to changing to true')
           errors.checkbox = false;
-        } else {
+        }else{
           console.log(`its ${errors.checkbox} so changing to ${!errors.checkbox}`)
           errors.checkbox = !errors.checkbox;
         }
