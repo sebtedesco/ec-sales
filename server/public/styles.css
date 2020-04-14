@@ -130,3 +130,25 @@ body {
   z-index: 1;
   background-color: rgba(0,0,0,0,.4);
 }
+
+@media screen and (max-width: 601px) {
+  .header-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (max-height: 620px) {
+  .navbar {
+    height: 15vh;
+  }
+
+  .container-bottom-nav {
+  height: 74vh;
+}
+
+.container-no-bottom {
+  height: 85vh;
+}
+
+
+}
