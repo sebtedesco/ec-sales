@@ -7,13 +7,19 @@ export default function CartSummaryItem(props) {
       <div className="row">
         <div className="col">
           <div className="col-lg-4 col-md-4 d-inline-block">
-            <img src={props.cartItem.image} alt="cartItem image" className="cart-image d-inline-block p-3" />
+            <img
+              src={props.cartItem.image}
+              alt="cartItem image"
+              className="cart-image d-inline-block p-3"
+            />
           </div>
-          <div className="col-lg-8 col-md-8 d-inline-block pl-8 h-100">
-            <h4 className="card-title">{props.cartItem.name}</h4>
-            <p className="card-text">{price}</p>
-            <p className="card-text">{props.cartItem.shortDescription}</p>
-            <p>Quantity</p>
+          <div className="col-lg-8 col-md-8 d-inline-block">
+            <div className="d-flex flex-column justify-content-around">
+              <h4 className="card-title">{props.cartItem.name}</h4>
+              <p className="card-text">{price}</p>
+              <p className="card-text">{props.cartItem.shortDescription}</p>
+              <p>Quantity</p>
+            </div>
           </div>
         </div>
       </div>
