@@ -5,7 +5,7 @@ export default function CartSummaryItem(props) {
   return (
     <div className="container mt-2 mb-2 w-lg-75 cart-items">
       <div className="row">
-        <div className="col">
+        <div className="col d-flex align-items-center">
           <div className="col-lg-4 col-md-4 d-inline-block">
             <img
               src={props.cartItem.image}
