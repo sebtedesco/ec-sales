@@ -18,7 +18,20 @@ export default function CartSummaryItem(props) {
               <h4 className="card-title">{props.cartItem.name}</h4>
               <p className="card-text">{price}</p>
               <p className="card-text">{props.cartItem.shortDescription}</p>
-              <p>Quantity</p>
+              <div className="row d-flex align-items-center">
+                <div className="col-5 d-inline-block">
+                  <span>
+                    <i className="fas fa-minus-circle"></i>
+                  </span>
+                  <div className="d-inline px-3">2</div>
+                  <span>
+                    <i className="fas fa-plus-circle"></i>
+                  </span>
+                </div>
+                <div className="col-7">
+                  <button type="button" className="btn btn-outline-danger btn-sm">Remove</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
