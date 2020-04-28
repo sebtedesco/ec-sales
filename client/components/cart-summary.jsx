@@ -1,5 +1,5 @@
 import React from 'react';
-// import CartSummaryItem from './cart-summary-item';
+import CartSummaryItem from './cart-summary-item';
 import BottomNav from './bottom-nav';
 
 export default function CartSummary(props) {
@@ -25,12 +25,12 @@ export default function CartSummary(props) {
         <div className="row">
           <div className="col p-4">
             {
-              // props.cart.map(cartItem => {
-              //   return <CartSummaryItem
-              //     key={cartItem.cartItemId}
-              //     cartItem={cartItem}
-              //   />;
-              // })
+              props.cart.map(cartItem => {
+                return <CartSummaryItem
+                  key={cartItem.cartItemId}
+                  cartItem={cartItem}
+                />;
+              })
             }
           </div>
         </div>
