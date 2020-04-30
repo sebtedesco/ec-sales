@@ -132,6 +132,10 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       req.session.cartId = result.cartId;
+      // conditional for if multiple of same item - changing quantity instead of adding additional row
+      if (result.cartId) {
+        return;
+      }
       const newCartItemRow = `
       insert into "cartItems" ("cartId", "productId", "price")
       values ($1, $2, $3)
