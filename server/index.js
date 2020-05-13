@@ -144,33 +144,39 @@ app.post('/api/cart', (req, res, next) => {
           if (result.rows.length === 0) {
             // eslint-disable-next-line no-console
             console.log('no items!');
+            const quantityUpdate = `
+            UPDATE "cartItems"
+            WHERE "cartId" = $1 and "productId" = $2
+            SET "quantity" = quantity + 1`;
+            const value = [result.cartId, productId];
+            db.query(quantityUpdate, value);
           } else {
             // eslint-disable-next-line no-console
             console.log('yes previous', result.rows);
+            const newCartItemRow = `
+            insert into "cartItems" ("cartId", "productId", "price")
+            values ($1, $2, $3)
+            returning "cartItemId"`;
+            const values = [result.cartId, productId, result.price];
+            return db.query(newCartItemRow, values);
           }
+        })
+        .then(result => {
+          const cartItemInfo = `
+          SELECT "c"."cartItemId",
+          "c"."price",
+          "p"."productId",
+          "p"."image",
+          "p"."name",
+          "p"."shortDescription"
+          FROM "cartItems" as "c"
+          JOIN "products" as "p" using ("productId")
+          WHERE "c"."cartItemId" = $1`;
+          const value = [result.rows[0].cartItemId];
+          return db.query(cartItemInfo, value);
         });
-      // END OF Conditional!
-      const newCartItemRow = `
-      insert into "cartItems" ("cartId", "productId", "price")
-      values ($1, $2, $3)
-      returning "cartItemId"`;
-      const values = [result.cartId, productId, result.price];
-      return db.query(newCartItemRow, values);
     })
-    .then(result => {
-      const cartItemInfo = `
-      SELECT "c"."cartItemId",
-      "c"."price",
-      "p"."productId",
-      "p"."image",
-      "p"."name",
-      "p"."shortDescription"
-      FROM "cartItems" as "c"
-      JOIN "products" as "p" using ("productId")
-      WHERE "c"."cartItemId" = $1`;
-      const value = [result.rows[0].cartItemId];
-      return db.query(cartItemInfo, value);
-    })
+  // END OF Conditional!
     .then(result => {
       res.status(200).json(result.rows[0]);
     })
