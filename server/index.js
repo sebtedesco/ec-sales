@@ -132,18 +132,18 @@ app.post('/api/cart', (req, res, next) => {
     })
     .then(result => {
       // console.log(result.rows);
-      // req.session.cartId = result.cartId;
+      req.session.cartId = result.cartId;
       // conditional for if multiple of same item - changing quantity instead of adding additional row
       const sqlcartItemsWithSameProductId = `
       SELECT "cartItemId"
       FROM "cartItems"
       WHERE "cartId" = $1 and "productId" = $2`;
       const value = [result.cartId, productId];
-      db.query(sqlcartItemsWithSameProductId, value);
-      // // .then(item);
-      // if (result.cartId) {
-      //   return;
-      // }
+      db.query(sqlcartItemsWithSameProductId, value)
+        .then(result => {
+
+          // console.log(result.rows);
+        });
       // END OF Conditional!
       const newCartItemRow = `
       insert into "cartItems" ("cartId", "productId", "price")
