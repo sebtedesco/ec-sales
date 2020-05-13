@@ -141,8 +141,13 @@ app.post('/api/cart', (req, res, next) => {
       const value = [result.cartId, productId];
       db.query(sqlcartItemsWithSameProductId, value)
         .then(result => {
-
-          // console.log(result.rows);
+          if (result.rows.length === 0) {
+            // eslint-disable-next-line no-console
+            console.log('no items!');
+          } else {
+            // eslint-disable-next-line no-console
+            console.log('yes previous', result.rows);
+          }
         });
       // END OF Conditional!
       const newCartItemRow = `
