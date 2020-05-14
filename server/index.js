@@ -130,38 +130,47 @@ app.post('/api/cart', (req, res, next) => {
           });
       }
     })
-    .then(result => {
-      // console.log(result.rows);
-      req.session.cartId = result.cartId;
+    .then(cartIdResult => {
+      // console.log('1', cartIdResult);
+      // console.log('cartId', cartIdResult.cartId)
+      req.session.cartId = cartIdResult.cartId;
       // conditional for if multiple of same item - changing quantity instead of adding additional row
       const sqlcartItemsWithSameProductId = `
       SELECT "cartItemId"
       FROM "cartItems"
       WHERE "cartId" = $1 and "productId" = $2`;
-      const value = [result.cartId, productId];
-      db.query(sqlcartItemsWithSameProductId, value)
-        .then(result => {
-          if (result.rows.length === 0) {
+      const value = [cartIdResult.cartId, productId];
+      return db.query(sqlcartItemsWithSameProductId, value)
+        .then(existingCartItemResult => {
+          // console.log('cartIdresult:', cartIdResult.cartId)
+          // console.log('2', existingCartItemResult.rows)
+          if (existingCartItemResult.rows.length === 0) {
             // eslint-disable-next-line no-console
-            console.log('no items!');
-            const quantityUpdate = `
-            UPDATE "cartItems"
-            WHERE "cartId" = $1 and "productId" = $2
-            SET "quantity" = quantity + 1`;
-            const value = [result.cartId, productId];
-            db.query(quantityUpdate, value);
+            console.log('result:', existingCartItemResult)
+            // console.log('cartId:', existingCartItemResult.cartId)
+            // console.log('productId:', productId)
+            // console.log('price:', existingCartItemResult.price)
+            ;
+            const newCartItemRow = `
+            insert into "cartItems" ("cartId", "productId", "price", "quantity")
+            values ($1, $2, $3, $4)
+            returning "cartItemId"`;
+            const values = [cartIdResult.cartId, productId, cartIdResult.price, 1];
+            return db.query(newCartItemRow, values);
           } else {
             // eslint-disable-next-line no-console
-            console.log('yes previous', result.rows);
-            const newCartItemRow = `
-            insert into "cartItems" ("cartId", "productId", "price")
-            values ($1, $2, $3)
+            console.log('yes previous', existingCartItemResult.rows);
+            const quantityUpdate = `
+            UPDATE "cartItems"
+            SET "quantity" = "quantity" + 1
+            WHERE "cartId" = $1 and "productId" = $2
             returning "cartItemId"`;
-            const values = [result.cartId, productId, result.price];
-            return db.query(newCartItemRow, values);
+            const value = [cartIdResult.cartId, productId];
+            return db.query(quantityUpdate, value);
           }
         })
-        .then(result => {
+        .then(newCartItemResult => {
+          // console.log('result', newCartItemResult)
           const cartItemInfo = `
           SELECT "c"."cartItemId",
           "c"."price",
@@ -172,13 +181,14 @@ app.post('/api/cart', (req, res, next) => {
           FROM "cartItems" as "c"
           JOIN "products" as "p" using ("productId")
           WHERE "c"."cartItemId" = $1`;
-          const value = [result.rows[0].cartItemId];
+          const value = [newCartItemResult.rows[0].cartItemId];
           return db.query(cartItemInfo, value);
         });
     })
   // END OF Conditional!
-    .then(result => {
-      res.status(200).json(result.rows[0]);
+    .then(finalResult => {
+      // console.log('finalResult:', finalResult)
+      res.status(200).json(finalResult.rows[0]);
     })
     .catch(err => next(err));
 });
