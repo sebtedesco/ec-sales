@@ -81,10 +81,12 @@ export default class App extends React.Component {
       })
       .then(response => {
         const newCartArr = [...this.state.cart];
-        newCartArr.push(response);
-        this.setState({ cart: newCartArr });
+        const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
+        newCartArrWithoutRepeat.push(response);
+        this.setState({ cart: newCartArrWithoutRepeat });
       })
       .catch(err => console.error(err));
+    // console.log(this.state.cart);
   }
 
   placeOrder(orderObject) {
