@@ -23,7 +23,7 @@ export default function CartSummaryItem(props) {
                   <span>
                     <i className="fas fa-minus-circle"></i>
                   </span>
-                  <div className="d-inline px-3">2</div>
+                  <div className="d-inline px-3">{props.cartItem.quantity}</div>
                   <span>
                     <i className="fas fa-plus-circle"></i>
                   </span>
