@@ -86,7 +86,6 @@ export default class App extends React.Component {
         this.setState({ cart: newCartArrWithoutRepeat });
       })
       .catch(err => console.error(err));
-    // console.log(this.state.cart);
   }
 
   placeOrder(orderObject) {
