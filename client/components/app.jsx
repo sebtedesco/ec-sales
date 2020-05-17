@@ -18,6 +18,7 @@ export default class App extends React.Component {
         params: {}
       },
       cart: [],
+      cartQuantity: 0,
       finalOrder: [],
       firstVisit: true
     };
@@ -83,7 +84,12 @@ export default class App extends React.Component {
         const newCartArr = [...this.state.cart];
         const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
         newCartArrWithoutRepeat.push(response);
-        this.setState({ cart: newCartArrWithoutRepeat });
+        this.setState(prevState => {
+          return {
+            cart: newCartArrWithoutRepeat,
+            cartQuantity: prevState.cartQuantity + 1
+          };
+        });
       })
       .catch(err => console.error(err));
   }
@@ -104,6 +110,7 @@ export default class App extends React.Component {
         this.setState({
           finalOrder: this.state.cart,
           cart: [],
+          cartQuantity: 0,
           view: { name: 'confirmation' }
         });
       })
@@ -132,7 +139,7 @@ export default class App extends React.Component {
     return (
       <>
         {this.showConsentModal()}
-        <Header cartItemCount={this.state.cart.length} setViewMethod={this.setView}/>
+        <Header cartQuantity={this.state.cartQuantity} setViewMethod={this.setView}/>
         { reactElementToDisplay }
       </>
     );

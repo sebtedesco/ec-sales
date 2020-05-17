@@ -9,7 +9,7 @@ export default class Header extends React.Component {
           Eric Clapton Shop
         </div>
         <button type="button" className="btn btn-light" onClick={() => this.props.setViewMethod('cart', {})}>
-          <h5 className="m-0"> <i className="fas fa-shopping-cart"></i> {this.props.cartItemCount} </h5>
+          <h5 className="m-0"> <i className="fas fa-shopping-cart"></i> {this.props.cartQuantity} </h5>
         </button>
       </nav>
     );
