@@ -2,9 +2,11 @@ import React from 'react';
 
 export default function BottomNav(props) {
   const arrOfCartItems = props.cart;
+  let itemTotalPrice = null;
   let totalPrice = null;
   arrOfCartItems.forEach(item => {
-    totalPrice += item.price;
+    itemTotalPrice = (item.price * item.quantity);
+    totalPrice += itemTotalPrice;
   });
   const totalPriceFormatted = `$${parseFloat(totalPrice / 100).toFixed(2)}`;
   const currentView = props.view;
