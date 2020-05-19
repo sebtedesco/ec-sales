@@ -20,11 +20,11 @@ export default function CartSummaryItem(props) {
               <p className="card-text">{props.cartItem.shortDescription}</p>
               <div className="row d-flex align-items-center">
                 <div className="col-5 d-inline-block">
-                  <span>
+                  <span className="plus-minus">
                     <i className="fas fa-minus-circle"></i>
                   </span>
                   <div className="d-inline px-3">{props.cartItem.quantity}</div>
-                  <span>
+                  <span className="plus-minus">
                     <i className="fas fa-plus-circle"></i>
                   </span>
                 </div>
