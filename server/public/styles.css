@@ -53,7 +53,7 @@ body {
   color: red!important;
 }
 
-.product-list-item, .header-title, .btn, .back-to-catalog, .cart-items {
+.product-list-item, .header-title, .btn, .back-to-catalog, .plus-minus {
   cursor: pointer;
 }
 
