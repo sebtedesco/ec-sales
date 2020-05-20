@@ -130,7 +130,7 @@ export default class App extends React.Component {
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
-      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} />;
+      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} addToCart={this.addToCart} />;
     } else if (this.state.view.name === 'checkout') {
       reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} view={this.state.view.name} setViewMethod={this.setView} cart={this.state.cart} />;
     } else if (this.state.view.name === 'confirmation') {

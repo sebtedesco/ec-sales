@@ -29,6 +29,7 @@ export default function CartSummary(props) {
                 return <CartSummaryItem
                   key={cartItem.cartItemId}
                   cartItem={cartItem}
+                  addToCart={props.addToCart}
                 />;
               })
             }
