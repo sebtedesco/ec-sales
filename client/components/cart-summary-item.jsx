@@ -24,7 +24,10 @@ export default function CartSummaryItem(props) {
                     <i className="fas fa-minus-circle"></i>
                   </span>
                   <div className="d-inline px-3">{props.cartItem.quantity}</div>
-                  <span className="plus-minus">
+                  <span
+                    className="plus-minus"
+                    onClick={() => { props.addToCart(props.cartItem); }}
+                  >
                     <i className="fas fa-plus-circle"></i>
                   </span>
                 </div>
