@@ -30,6 +30,7 @@ export default function CartSummary(props) {
                   key={cartItem.cartItemId}
                   cartItem={cartItem}
                   addToCart={props.addToCart}
+                  removeFromCart={props.removeFromCart}
                 />;
               })
             }

@@ -69,6 +69,7 @@ export default class App extends React.Component {
   }
 
   addToCart(productObj) {
+    // console.log('productObj: ', productObj);
     const init = {
       method: 'POST',
       headers: {
@@ -77,6 +78,34 @@ export default class App extends React.Component {
       body: JSON.stringify(productObj)
     };
     fetch('/api/cart', init)
+      .then(response => {
+        return response.json();
+      })
+      .then(response => {
+        // console.log('response:, ', response);
+        const newCartArr = [...this.state.cart];
+        const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
+        newCartArrWithoutRepeat.push(response);
+        this.setState(prevState => {
+          return {
+            cart: newCartArrWithoutRepeat,
+            cartQuantity: prevState.cartQuantity + 1
+          };
+        });
+      })
+      .catch(err => console.error(err));
+  }
+
+  removeFromCart(productObj, amount) {
+    // console.log('productObj RemoveFromCart: ', productObj);
+    const init = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(productObj)
+    };
+    fetch('api/cart', init)
       .then(response => {
         return response.json();
       })
@@ -90,8 +119,7 @@ export default class App extends React.Component {
             cartQuantity: prevState.cartQuantity + 1
           };
         });
-      })
-      .catch(err => console.error(err));
+      });
   }
 
   placeOrder(orderObject) {
@@ -130,7 +158,7 @@ export default class App extends React.Component {
     } else if (this.state.view.name === 'details') {
       reactElementToDisplay = <ProductDetails productId={this.state.view.params.productId} setViewMethod={this.setView} addToCart={this.addToCart}/>;
     } else if (this.state.view.name === 'cart') {
-      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} addToCart={this.addToCart} />;
+      reactElementToDisplay = <CartSummary totalPrice={totalPriceFormatted} cart={this.state.cart} view={this.state.view.name} setViewMethod={this.setView} addToCart={this.addToCart} removeFromCart={this.removeFromCart} />;
     } else if (this.state.view.name === 'checkout') {
       reactElementToDisplay = <Checkout totalPrice={totalPriceFormatted} placeOrder={this.placeOrder} view={this.state.view.name} setViewMethod={this.setView} cart={this.state.cart} />;
     } else if (this.state.view.name === 'confirmation') {
