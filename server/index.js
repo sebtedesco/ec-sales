@@ -195,6 +195,11 @@ app.post('/api/cart', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/cart', (req, res, next) => {
+  // eslint-disable-next-line no-console
+  console.log('req body: ', req.body);
+});
+
 app.post('/api/orders', (req, res, next) => {
   // console.log('req.body: ', req.body);
   const cartId = req.session.cartId;
