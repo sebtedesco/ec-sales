@@ -96,31 +96,31 @@ export default class App extends React.Component {
       .catch(err => console.error(err));
   }
 
-  removeFromCart(productObj, amount) {
-    // console.log('productObj RemoveFromCart: ', productObj);
-    const init = {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(productObj)
-    };
-    fetch('api/cart', init)
-      .then(response => {
-        return response.json();
-      })
-      .then(response => {
-        const newCartArr = [...this.state.cart];
-        const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
-        newCartArrWithoutRepeat.push(response);
-        this.setState(prevState => {
-          return {
-            cart: newCartArrWithoutRepeat,
-            cartQuantity: prevState.cartQuantity + 1
-          };
-        });
-      });
-  }
+  // removeFromCart(productObj, amount) {
+  //   // console.log('productObj RemoveFromCart: ', productObj);
+  //   const init = {
+  //     method: 'DELETE',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(productObj)
+  //   };
+  //   fetch('api/cart', init)
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(response => {
+  //       const newCartArr = [...this.state.cart];
+  //       const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
+  //       newCartArrWithoutRepeat.push(response);
+  //       this.setState(prevState => {
+  //         return {
+  //           cart: newCartArrWithoutRepeat,
+  //           cartQuantity: prevState.cartQuantity + 1
+  //         };
+  //       });
+  //     });
+  // }
 
   placeOrder(orderObject) {
     if (!orderObject.fName || !orderObject.creditCardNumber || !orderObject.street) {
