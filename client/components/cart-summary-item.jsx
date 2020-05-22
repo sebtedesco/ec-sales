@@ -35,7 +35,11 @@ export default function CartSummaryItem(props) {
                   </span>
                 </div>
                 <div className="col-7">
-                  <button type="button" className="btn btn-outline-danger btn-sm">Remove</button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger btn-sm"
+                    onClick={() => { props.removeFromCart(props.cartItem, 'ALL'); }}
+                  >Remove</button>
                 </div>
               </div>
             </div>
