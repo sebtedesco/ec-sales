@@ -140,8 +140,8 @@ app.post('/api/cart', (req, res, next) => {
       SELECT "cartItemId"
       FROM "cartItems"
       WHERE "cartId" = $1 and "productId" = $2`;
-      const value = [cartIdResult.cartId, productId];
-      return db.query(sqlcartItemsWithSameProductId, value)
+      const values = [cartIdResult.cartId, productId];
+      return db.query(sqlcartItemsWithSameProductId, values)
         .then(existingCartItemResult => {
           // console.log('cartIdresult:', cartIdResult.cartId)
           // console.log('2', existingCartItemResult.rows)
@@ -196,8 +196,32 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.delete('/api/cart', (req, res, next) => {
+  const quantityToDelete = req.body.amount;
+  const cartId = req.session.cartId;
+  const cartItemId = req.body.productObj.cartItemId;
+  const productId = req.body.productObj.productId;
+  // console.log('quantityToDelete: ', req.body.amount)
   // eslint-disable-next-line no-console
-  console.log('req body: ', req.body);
+  // console.log('req body: ', req.body);
+  if (!cartItemId) {
+    throw new ClientError('no ClientId included in request', 400);
+  } else if (!quantityToDelete) {
+    throw new ClientError('Quanity of items to delete must be included', 400);
+  }
+  const sqlQuantityOfItem = `
+  SELECT "quantity"
+  FROM "cartItems"
+  WHERE "cartId" = $1 and "productId" = $2`;
+  const values = [cartId, productId];
+  db.query(sqlQuantityOfItem, values)
+    .then(response => {
+      // eslint-disable-next-line no-console
+      console.log('delete response: ', response.rows[0].quantity);
+    })
+    .catch(err => next(err));
+  // if(quantityToDelete === 'one'){
+
+  // }
 });
 
 app.post('/api/orders', (req, res, next) => {
