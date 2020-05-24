@@ -147,11 +147,11 @@ app.post('/api/cart', (req, res, next) => {
           // console.log('2', existingCartItemResult.rows)
           if (existingCartItemResult.rows.length === 0) {
             // eslint-disable-next-line no-console
-            console.log('result:', existingCartItemResult)
+            // console.log('result:', existingCartItemResult)
             // console.log('cartId:', existingCartItemResult.cartId)
             // console.log('productId:', productId)
             // console.log('price:', existingCartItemResult.price)
-            ;
+
             const newCartItemRow = `
             insert into "cartItems" ("cartId", "productId", "price", "quantity")
             values ($1, $2, $3, $4)
@@ -196,29 +196,40 @@ app.post('/api/cart', (req, res, next) => {
 });
 
 app.delete('/api/cart', (req, res, next) => {
+  const quantityInCart = req.body.productObj.quantity;
   const quantityToDelete = req.body.amount;
   const cartId = req.session.cartId;
   const cartItemId = req.body.productObj.cartItemId;
   const productId = req.body.productObj.productId;
   // console.log('quantityToDelete: ', req.body.amount)
-  // eslint-disable-next-line no-console
-  // console.log('req body: ', req.body);
+  // console.log('quantityInCart: ', quantityInCart)
   if (!cartItemId) {
     throw new ClientError('no ClientId included in request', 400);
   } else if (!quantityToDelete) {
     throw new ClientError('Quanity of items to delete must be included', 400);
+  } else if (quantityToDelete === 'ALL' || quantityInCart === 1) {
+    const sqlDeleteAll = `
+    DELETE from "cartItems"
+    WHERE "cartId" = $1 and "productId" = $2`;
+    const values = [cartId, productId];
+    db.query(sqlDeleteAll, values)
+      .catch(err => next(err));
   }
-  const sqlQuantityOfItem = `
-  SELECT "quantity"
-  FROM "cartItems"
-  WHERE "cartId" = $1 and "productId" = $2`;
-  const values = [cartId, productId];
-  db.query(sqlQuantityOfItem, values)
-    .then(response => {
-      // eslint-disable-next-line no-console
-      console.log('delete response: ', response.rows[0].quantity);
-    })
-    .catch(err => next(err));
+
+  // query to pull quantity of item being deleted
+  // Commenting out because will do in front end instead
+  // const sqlQuantityOfItem = `
+  // SELECT "quantity"
+  // FROM "cartItems"
+  // WHERE "cartId" = $1 and "productId" = $2`;
+  // const values = [cartId, productId];
+  // db.query(sqlQuantityOfItem, values)
+  //   .then(response => {
+  //     // eslint-disable-next-line no-console
+  //     console.log('delete response: ', response.rows[0].quantity);
+  // })
+
+  // .catch(err => next(err));
   // if(quantityToDelete === 'one'){
 
   // }
