@@ -202,7 +202,8 @@ app.delete('/api/cart', (req, res, next) => {
   const cartItemId = req.body.productObj.cartItemId;
   const productId = req.body.productObj.productId;
   // console.log('quantityToDelete: ', req.body.amount)
-  // console.log('quantityInCart: ', quantityInCart)
+  // eslint-disable-next-line no-console
+  console.log('quantityInCart: ', quantityInCart);
   if (!cartItemId) {
     throw new ClientError('no ClientId included in request', 400);
   } else if (!quantityToDelete) {
@@ -210,9 +211,32 @@ app.delete('/api/cart', (req, res, next) => {
   } else if (quantityToDelete === 'ALL' || quantityInCart === 1) {
     const sqlDeleteAll = `
     DELETE from "cartItems"
-    WHERE "cartId" = $1 and "productId" = $2`;
+    WHERE "cartId" = $1 and "productId" = $2
+    returning "cartItemId"`;
     const values = [cartId, productId];
-    return db.query(sqlDeleteAll, values)
+    db.query(sqlDeleteAll, values)
+      .then(newCartItemResult => {
+        // eslint-disable-next-line no-console
+        console.log('result 1', newCartItemResult);
+        const cartItemInfo = `
+          SELECT "c"."cartItemId",
+          "c"."price",
+          "c"."quantity",
+          "p"."productId",
+          "p"."image",
+          "p"."name",
+          "p"."shortDescription"
+          FROM "cartItems" as "c"
+          JOIN "products" as "p" using ("productId")
+          WHERE "c"."cartItemId" = $1`;
+        const value = [newCartItemResult.rows[0].cartItemId];
+        return db.query(cartItemInfo, value);
+      })
+      .then(finalResult => {
+      // eslint-disable-next-line no-console
+        console.log('finalResult:', finalResult);
+        res.status(200).json(finalResult.rows[0]);
+      })
       .catch(err => next(err));
   }
 

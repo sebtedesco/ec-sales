@@ -82,7 +82,8 @@ export default class App extends React.Component {
         return response.json();
       })
       .then(response => {
-        // console.log('response:, ', response);
+        // eslint-disable-next-line no-console
+        console.log('response add to cart: ', response);
         const newCartArr = [...this.state.cart];
         const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
         newCartArrWithoutRepeat.push(response);
@@ -112,6 +113,8 @@ export default class App extends React.Component {
     };
     fetch('api/cart', init)
       .then(response => {
+        // eslint-disable-next-line no-console
+        console.log('response frontend:', response);
         return response.json();
       })
       .then(response => {
