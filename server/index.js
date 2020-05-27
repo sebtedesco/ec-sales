@@ -212,7 +212,7 @@ app.delete('/api/cart', (req, res, next) => {
     DELETE from "cartItems"
     WHERE "cartId" = $1 and "productId" = $2`;
     const values = [cartId, productId];
-    db.query(sqlDeleteAll, values)
+    return db.query(sqlDeleteAll, values)
       .catch(err => next(err));
   }
 
