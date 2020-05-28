@@ -215,23 +215,23 @@ app.delete('/api/cart', (req, res, next) => {
     returning "cartItemId"`;
     const values = [cartId, productId];
     db.query(sqlDeleteAll, values)
-      .then(newCartItemResult => {
-        // eslint-disable-next-line no-console
-        console.log('result 1', newCartItemResult);
-        const cartItemInfo = `
-          SELECT "c"."cartItemId",
-          "c"."price",
-          "c"."quantity",
-          "p"."productId",
-          "p"."image",
-          "p"."name",
-          "p"."shortDescription"
-          FROM "cartItems" as "c"
-          JOIN "products" as "p" using ("productId")
-          WHERE "c"."cartItemId" = $1`;
-        const value = [newCartItemResult.rows[0].cartItemId];
-        return db.query(cartItemInfo, value);
-      })
+      // .then(newCartItemResult => {
+      //   // eslint-disable-next-line no-console
+      //   console.log('result 1', newCartItemResult);
+      //   const cartItemInfo = `
+      //     SELECT "c"."cartItemId",
+      //     "c"."price",
+      //     "c"."quantity",
+      //     "p"."productId",
+      //     "p"."image",
+      //     "p"."name",
+      //     "p"."shortDescription"
+      //     FROM "cartItems" as "c"
+      //     JOIN "products" as "p" using ("productId")
+      //     WHERE "c"."cartItemId" = $1`;
+      //   const value = [newCartItemResult.rows[0].cartItemId];
+      //   return db.query(cartItemInfo, value);
+      // })
       .then(finalResult => {
       // eslint-disable-next-line no-console
         console.log('finalResult:', finalResult);
