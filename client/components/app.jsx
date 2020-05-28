@@ -28,6 +28,7 @@ export default class App extends React.Component {
     this.placeOrder = this.placeOrder.bind(this);
     this.showConsentModal = this.showConsentModal.bind(this);
     this.hideConsentModal = this.hideConsentModal.bind(this);
+    this.removeFromCart = this.removeFromCart.bind(this);
 
   }
 
@@ -117,14 +118,13 @@ export default class App extends React.Component {
         console.log('response frontend:', response);
         return response.json();
       })
-      .then(response => {
+      .then(cartIdResponse => {
         const newCartArr = [...this.state.cart];
-        const newCartArrWithoutRepeat = newCartArr.filter(toFilter => toFilter.productId !== response.productId);
-        newCartArrWithoutRepeat.push(response);
+        const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartIdResponse.cartItemId);
+        // console.log('filtered: ', newCartArrWithoutDeleted)
         this.setState(prevState => {
           return {
-            cart: newCartArrWithoutRepeat,
-            cartQuantity: prevState.cartQuantity + 1
+            cart: newCartArrWithoutDeleted
           };
         });
       });

@@ -214,10 +214,10 @@ app.delete('/api/cart', (req, res, next) => {
     WHERE "cartId" = $1 and "productId" = $2
     returning "cartItemId"`;
     const values = [cartId, productId];
-    db.query(sqlDeleteAll, values)
+    return db.query(sqlDeleteAll, values)
       // .then(newCartItemResult => {
       //   // eslint-disable-next-line no-console
-      //   console.log('result 1', newCartItemResult);
+      //   console.log('result 1', newCartItemResult.rows[0]);
       //   const cartItemInfo = `
       //     SELECT "c"."cartItemId",
       //     "c"."price",
@@ -234,7 +234,7 @@ app.delete('/api/cart', (req, res, next) => {
       // })
       .then(finalResult => {
       // eslint-disable-next-line no-console
-        console.log('finalResult:', finalResult);
+        console.log('finalResult:', finalResult.rows[0]);
         res.status(200).json(finalResult.rows[0]);
       })
       .catch(err => next(err));
