@@ -215,23 +215,6 @@ app.delete('/api/cart', (req, res, next) => {
     returning "cartItemId"`;
     const values = [cartId, productId];
     return db.query(sqlDeleteAll, values)
-      // .then(newCartItemResult => {
-      //   // eslint-disable-next-line no-console
-      //   console.log('result 1', newCartItemResult.rows[0]);
-      //   const cartItemInfo = `
-      //     SELECT "c"."cartItemId",
-      //     "c"."price",
-      //     "c"."quantity",
-      //     "p"."productId",
-      //     "p"."image",
-      //     "p"."name",
-      //     "p"."shortDescription"
-      //     FROM "cartItems" as "c"
-      //     JOIN "products" as "p" using ("productId")
-      //     WHERE "c"."cartItemId" = $1`;
-      //   const value = [newCartItemResult.rows[0].cartItemId];
-      //   return db.query(cartItemInfo, value);
-      // })
       .then(finalResult => {
       // eslint-disable-next-line no-console
         console.log('finalResult:', finalResult.rows[0]);
@@ -239,24 +222,6 @@ app.delete('/api/cart', (req, res, next) => {
       })
       .catch(err => next(err));
   }
-
-  // query to pull quantity of item being deleted
-  // Commenting out because will do in front end instead
-  // const sqlQuantityOfItem = `
-  // SELECT "quantity"
-  // FROM "cartItems"
-  // WHERE "cartId" = $1 and "productId" = $2`;
-  // const values = [cartId, productId];
-  // db.query(sqlQuantityOfItem, values)
-  //   .then(response => {
-  //     // eslint-disable-next-line no-console
-  //     console.log('delete response: ', response.rows[0].quantity);
-  // })
-
-  // .catch(err => next(err));
-  // if(quantityToDelete === 'one'){
-
-  // }
 });
 
 app.post('/api/orders', (req, res, next) => {
