@@ -143,15 +143,7 @@ app.post('/api/cart', (req, res, next) => {
       const values = [cartIdResult.cartId, productId];
       return db.query(sqlcartItemsWithSameProductId, values)
         .then(existingCartItemResult => {
-          // console.log('cartIdresult:', cartIdResult.cartId)
-          // console.log('2', existingCartItemResult.rows)
           if (existingCartItemResult.rows.length === 0) {
-            // eslint-disable-next-line no-console
-            // console.log('result:', existingCartItemResult)
-            // console.log('cartId:', existingCartItemResult.cartId)
-            // console.log('productId:', productId)
-            // console.log('price:', existingCartItemResult.price)
-
             const newCartItemRow = `
             insert into "cartItems" ("cartId", "productId", "price", "quantity")
             values ($1, $2, $3, $4)
@@ -159,8 +151,6 @@ app.post('/api/cart', (req, res, next) => {
             const values = [cartIdResult.cartId, productId, cartIdResult.price, 1];
             return db.query(newCartItemRow, values);
           } else {
-            // eslint-disable-next-line no-console
-            console.log('yes previous', existingCartItemResult.rows);
             const quantityUpdate = `
             UPDATE "cartItems"
             SET "quantity" = "quantity" + 1
@@ -208,18 +198,33 @@ app.delete('/api/cart', (req, res, next) => {
     throw new ClientError('no ClientId included in request', 400);
   } else if (!quantityToDelete) {
     throw new ClientError('Quanity of items to delete must be included', 400);
-  } else if (quantityToDelete === 'ALL' || quantityInCart === 1) {
-    const sqlDeleteAll = `
-    DELETE from "cartItems"
-    WHERE "cartId" = $1 and "productId" = $2
-    returning "cartItemId"`;
-    const values = [cartId, productId];
-    return db.query(sqlDeleteAll, values)
-      .then(finalResult => {
+  } else {
+    let dbPromise = null;
+    if (quantityToDelete === 'ALL' || quantityInCart === 1) {
+      const sqlToDelete = `
+      DELETE from "cartItems"
+      WHERE "cartId" = $1 and "productId" = $2
+      returning "cartItemId"`;
+      const values = [cartId, productId];
+      dbPromise = db.query(sqlToDelete, values);
+    } else if (quantityToDelete === 'one' && quantityInCart > 1) {
+      const sqlToDelete = `
+      UPDATE "cartItems"
+      SET "quantity" = "quantity" - 1
+      WHERE "cartId" = $1 and "productId" = $2
+      returning "cartItemId"`;
+      const values = [cartId, productId];
+      dbPromise = db.query(sqlToDelete, values);
+    }
+    dbPromise.then(finalResult => {
+      const cartIdAndQuantity = {
+        cartId: finalResult.rows[0],
+        quantity: quantityToDelete
+      };
       // eslint-disable-next-line no-console
-        console.log('finalResult:', finalResult.rows[0]);
-        res.status(200).json(finalResult.rows[0]);
-      })
+      // console.log('finalResult:', finalResult.rows[0]);
+      res.status(200).json(cartIdAndQuantity);
+    })
       .catch(err => next(err));
   }
 });

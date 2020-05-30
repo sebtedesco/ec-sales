@@ -119,14 +119,19 @@ export default class App extends React.Component {
         return response.json();
       })
       .then(cartIdResponse => {
+        // console.log('response frontend after.json:', cartIdResponse);
         const newCartArr = [...this.state.cart];
-        const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartIdResponse.cartItemId);
-        // console.log('filtered: ', newCartArrWithoutDeleted)
-        this.setState(prevState => {
-          return {
-            cart: newCartArrWithoutDeleted
-          };
-        });
+        if (cartIdResponse.quantity === 'ALL') {
+          const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartIdResponse.cartItemId);
+          // console.log('filtered: ', newCartArrWithoutDeleted)
+          this.setState(prevState => {
+            return {
+              cart: newCartArrWithoutDeleted
+            };
+          });
+        // } else {
+        //   const quantityToDecrease = newCartArr[cartIdResponse.quantity]
+        }
       });
   }
 
