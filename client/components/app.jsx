@@ -63,9 +63,18 @@ export default class App extends React.Component {
   }
 
   getCartItems() {
+    let numberOfItemsInCart = null;
     fetch('/api/cart')
       .then(res => res.json())
-      .then(data => this.setState({ cart: data }))
+      .then(data => {
+        for (const index in data) {
+          numberOfItemsInCart += data[index].quantity;
+        }
+        this.setState({
+          cart: data,
+          cartQuantity: numberOfItemsInCart
+        });
+      })
       .catch(err => console.error(err));
   }
 
@@ -122,11 +131,14 @@ export default class App extends React.Component {
         const quantityToDelete = cartIdResponse.quantityToDelete;
         const quantityInCart = cartIdResponse.quantityInCart;
         let newCart = null;
+        let quantityToRemoveFromCart = null;
         const newCartArr = [...this.state.cart];
         if (quantityToDelete === 'ALL' || quantityInCart === 1) {
+          quantityToRemoveFromCart = quantityInCart;
           const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartId);
           newCart = newCartArrWithoutDeleted;
         } else {
+          quantityToRemoveFromCart = 1;
           newCart = newCartArr.map(item => {
             if (item.cartItemId === cartId) {
               const updatedItem = { ...item };
@@ -137,7 +149,12 @@ export default class App extends React.Component {
             }
           });
         }
-        this.setState({ cart: newCart });
+        this.setState(prevState => {
+          return {
+            cart: newCart,
+            cartQuantity: prevState.cartQuantity - quantityToRemoveFromCart
+          };
+        });
       });
   }
 
