@@ -218,8 +218,9 @@ app.delete('/api/cart', (req, res, next) => {
     }
     dbPromise.then(finalResult => {
       const cartIdAndQuantity = {
-        cartId: finalResult.rows[0],
-        quantity: quantityToDelete
+        cartId: finalResult.rows[0].cartItemId,
+        quantityToDelete: quantityToDelete,
+        quantityInCart: quantityInCart
       };
       // eslint-disable-next-line no-console
       // console.log('finalResult:', finalResult.rows[0]);

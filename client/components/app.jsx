@@ -115,23 +115,29 @@ export default class App extends React.Component {
     fetch('api/cart', init)
       .then(response => {
         // eslint-disable-next-line no-console
-        console.log('response frontend:', response);
         return response.json();
       })
       .then(cartIdResponse => {
-        // console.log('response frontend after.json:', cartIdResponse);
+        const cartId = cartIdResponse.cartId;
+        const quantityToDelete = cartIdResponse.quantityToDelete;
+        const quantityInCart = cartIdResponse.quantityInCart;
+        let newCart = null;
         const newCartArr = [...this.state.cart];
-        if (cartIdResponse.quantity === 'ALL') {
-          const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartIdResponse.cartItemId);
-          // console.log('filtered: ', newCartArrWithoutDeleted)
-          this.setState(prevState => {
-            return {
-              cart: newCartArrWithoutDeleted
-            };
+        if (quantityToDelete === 'ALL' || quantityInCart === 1) {
+          const newCartArrWithoutDeleted = newCartArr.filter(toFilter => toFilter.cartItemId !== cartId);
+          newCart = newCartArrWithoutDeleted;
+        } else {
+          newCart = newCartArr.map(item => {
+            if (item.cartItemId === cartId) {
+              const updatedItem = { ...item };
+              updatedItem.quantity--;
+              return updatedItem;
+            } else {
+              return item;
+            }
           });
-        // } else {
-        //   const quantityToDecrease = newCartArr[cartIdResponse.quantity]
         }
+        this.setState({ cart: newCart });
       });
   }
 
