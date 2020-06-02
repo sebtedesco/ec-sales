@@ -40,10 +40,10 @@ export default class Checkout extends React.Component {
     const name = event.target.name;
     let value;
     if (name === 'checkbox') {
-      console.log('checkbox conditional')
+      // console.log('checkbox conditional')
       const errors = { ...this.state.errors };
       if (errors.checkbox === '') {
-        console.log('empty string')
+        // console.log('empty string')
         errors[name] = false;
       } else {
         errors[name] = !errors.checkbox
@@ -137,10 +137,10 @@ export default class Checkout extends React.Component {
         break;
       case 'checkbox':
         if (this.state.errors.checkbox === 'init') {
-          console.log('its a string to changing to true')
+          // console.log('its a string to changing to true')
           errors.checkbox = false;
         }else{
-          console.log(`its ${errors.checkbox} so changing to ${!errors.checkbox}`)
+          // console.log(`its ${errors.checkbox} so changing to ${!errors.checkbox}`)
           errors.checkbox = !errors.checkbox;
         }
         this.setState({
@@ -157,10 +157,10 @@ export default class Checkout extends React.Component {
 
   errorFree() {
     if (!this.state.errors.fName && this.state.fName && !this.state.errors.lName && this.state.lName && !this.state.errors.street && this.state.street && !this.state.errors.city && this.state.city && !this.state.errors.state && this.state.state && !this.state.errors.zip && this.state.zip && !this.state.errors.fullName && this.state.fullName && !this.state.errors.creditCardNumber && this.state.creditCardNumber && !this.state.errors.expiration && this.state.expiration && !this.state.errors.cvv && this.state.cvv && !this.state.errors.checkbox) {
-      console.log('error free!')
+      // console.log('error free!')
       this.setState({ errorFree: true });
     } else {
-      console.log('errors...')
+      // console.log('errors...')
       this.setState({ errorFree: false });
     }
   }
