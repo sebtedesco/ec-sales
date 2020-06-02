@@ -6,6 +6,7 @@ import CartSummary from './cart-summary';
 import Checkout from './checkout-form';
 import ConsentModal from './consent-modal';
 import Confirmation from './confirmation-page';
+// import GoToCartModal from './go-to-cart-modal';
 
 export default class App extends React.Component {
   constructor(props) {
