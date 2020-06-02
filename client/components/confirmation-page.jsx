@@ -15,6 +15,7 @@ export default function Confirmation(props) {
                   return <CartSummaryItem
                     key={cartItem.cartItemId}
                     cartItem={cartItem}
+                    view={props.view}
                   />;
                 })
               }

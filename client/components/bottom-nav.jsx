@@ -52,7 +52,7 @@ export default function BottomNav(props) {
     <div className="container">
       <div className="bottom-nav row justify-content-between">
         <div className="col order-total">{totalText} {totalPriceFormatted}</div>
-        <button type="button" className="btn btn-primary checkout-button" onClick={ buttonClicked }>{buttonText}</button>
+        <button type="button" className="btn btn-success checkout-button" onClick={ buttonClicked }>{buttonText}</button>
       </div>
     </div>
   );

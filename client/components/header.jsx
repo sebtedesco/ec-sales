@@ -15,10 +15,3 @@ export default class Header extends React.Component {
     );
   }
 }
-
-// <header className="container-fluid justify-content-between">
-// <div className="row">
-//   <h3>$ Wicked Sales</h3>
-//   <h5 onClick={() => this.props.setViewMethod('cart', {})}>{this.props.cartItemCount} Items <i className="fas fa-shopping-cart"></i></h5>
-// </div>
-// </header>

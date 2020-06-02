@@ -5,8 +5,8 @@ export default class ProductDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      product: null
-      // modal: false
+      product: null,
+      modal: false
     };
 
     this.consentModal = this.consentModal.bind(this);
@@ -33,7 +33,7 @@ export default class ProductDetails extends React.Component {
 
   consentModal() {
     // console.log('hello there');
-    this.setState({ consentModal: !this.state.consentModal });
+    this.setState({ modal: !this.state.modal });
     // console.log(this.state.consentModal);
   }
 
@@ -66,7 +66,7 @@ export default class ProductDetails extends React.Component {
                     <h4 className="card-title">{this.state.product.name}</h4>
                     <p className="card-text">{price}</p>
                     <p className="card-text">{this.state.product.shortDescription}</p>
-                    {/* <button type="button" className="btn btn-primary float-right" onClick={() => { this.props.addToCart(this.state.product), this.consentModal(); }} >Add to Cart</button> */}
+                    <button type="button" className="btn btn-success float-right" onClick={() => { this.props.addToCart(this.state.product); this.consentModal(); }} >Add to Cart</button>
                   </div>
                 </div>
               </div>
@@ -76,11 +76,17 @@ export default class ProductDetails extends React.Component {
                 </div>
               </div>
               <div className={`modal-background container position-fixed w-100 h-100 ${!this.state.modal ? 'd-none' : ''}`}>
-                <div className="consent-modal">
-                  <h1>Item has been added to cart.</h1>
-                  <p>This site is for educational purposes ONLY. You cannot purchase Eric Clapton memorabilia here.</p>
-                  {/* <button type="button" className="btn btn-success" onClick={this.props.setViewMethod('catalog')}>Keep Shopping</button>
-                  <button type="button" className="btn btn-success" onClick={props.setViewMethod('cart')}>Go To Cart</button> */}
+                <div className="modal cart-modal">
+                  <h3>Item has been added to cart.</h3>
+                  {/* <p>Would you like to continue shopping or view your cart?</p> */}
+                  <div className="row w-100 d-flex justify-content-around p-0">
+                    <div className="col-6 d-flex justify-content-center">
+                      <button type="button" className="btn btn-success" onClick={() => { this.props.setViewMethod('catalog'); }}>Continue Shopping</button>
+                    </div>
+                    <div className="col-6 d-flex justify-content-center">
+                      <button type="button" className="btn btn-success" onClick={() => { this.props.setViewMethod('cart'); }}>Go To Cart</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

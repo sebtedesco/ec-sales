@@ -18,28 +18,31 @@ export default function CartSummaryItem(props) {
               <h4 className="card-title">{props.cartItem.name}</h4>
               <p className="card-text">{price}</p>
               <p className="card-text">{props.cartItem.shortDescription}</p>
-              <div className="row d-flex align-items-center">
-                <div className="col-5 d-inline-block">
-                  <span
-                    className="plus-minus"
-                    onClick={() => { props.removeFromCart(props.cartItem, 'one'); }}
-                  >
-                    <i className="fas fa-minus-circle"></i>
-                  </span>
-                  <div className="d-inline px-3">{props.cartItem.quantity}</div>
-                  <span
-                    className="plus-minus"
-                    onClick={() => { props.addToCart(props.cartItem); }}
-                  >
-                    <i className="fas fa-plus-circle"></i>
-                  </span>
-                </div>
-                <div className="col-7">
-                  <button
-                    type="button"
-                    className="btn btn-outline-danger btn-sm"
-                    onClick={() => { props.removeFromCart(props.cartItem, 'ALL'); }}
-                  >Remove</button>
+              <p className={`${props.view !== 'confirmation' ? 'd-none' : ''}`}>{`Quantity: ${props.cartItem.quantity}`}</p>
+              <div className={`${props.view === 'confirmation' ? 'd-none' : ''}`}>
+                <div className={'row d-flex align-items-center'}>
+                  <div className="col-5 d-inline-block">
+                    <span
+                      className="plus-minus"
+                      onClick={() => { props.removeFromCart(props.cartItem, 'one'); }}
+                    >
+                      <i className="fas fa-minus-circle"></i>
+                    </span>
+                    <div className="d-inline px-3">{props.cartItem.quantity}</div>
+                    <span
+                      className="plus-minus"
+                      onClick={() => { props.addToCart(props.cartItem); }}
+                    >
+                      <i className="fas fa-plus-circle"></i>
+                    </span>
+                  </div>
+                  <div className="col-7">
+                    <button
+                      type="button"
+                      className="btn btn-outline-danger btn-sm"
+                      onClick={() => { props.removeFromCart(props.cartItem, 'ALL'); }}
+                    >Remove</button>
+                  </div>
                 </div>
               </div>
             </div>
